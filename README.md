@@ -1,6 +1,9 @@
 # streamex
 Java 8 Streams and Optionals but with checked Exceptions
 
+![Java CI](https://github.com/SR3u/streamex/workflows/Java%20CI/badge.svg)
+[![JitPack](https://jitpack.io/v/SR3u/streamex.svg)](https://jitpack.io/#SR3u/streamex)
+
 ## Usage:
 Add to your pom.xml a repository:
 ```xml
@@ -16,7 +19,7 @@ Then a dependency
 <dependency>
   <groupId>com.github.SR3u</groupId>
   <artifactId>streamex</artifactId>
-  <version>Tag</version>
+  <version>-SNAPSHOT</version>
 </dependency>
 ```
 
