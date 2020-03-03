@@ -17,12 +17,12 @@ public class OptionalIntex {
         internal = optionalInt;
     }
 
-    public static OptionalInt empty() {
-        return OptionalInt.empty();
+    public static OptionalIntex empty() {
+        return ofOptional(OptionalInt.empty());
     }
 
-    public static OptionalInt of(int value) {
-        return OptionalInt.of(value);
+    public static OptionalIntex of(int value) {
+        return ofOptional(OptionalInt.of(value));
     }
 
     public static OptionalIntex ofOptional(OptionalInt optionalInt) {

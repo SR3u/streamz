@@ -27,15 +27,15 @@ public class Optionalex<T> {
     }
 
     public static <T1> Optionalex<T1> empty() {
-        return Optionalex.ofOptional(Optional.empty());
+        return ofOptional(Optional.empty());
     }
 
     public static <T1> Optionalex<T1> of(T1 value) {
-        return Optionalex.ofOptional(Optional.of(value));
+        return ofOptional(Optional.of(value));
     }
 
     public static <T1> Optionalex<T1> ofNullable(T1 value) {
-        return Optionalex.ofOptional(Optional.ofNullable(value));
+        return ofOptional(Optional.ofNullable(value));
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")

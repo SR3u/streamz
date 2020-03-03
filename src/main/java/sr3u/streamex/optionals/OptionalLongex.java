@@ -22,8 +22,8 @@ public class OptionalLongex {
         return new OptionalLongex(optionalLong);
     }
 
-    public static OptionalLong empty() {
-        return OptionalLong.empty();
+    public static OptionalLongex empty() {
+        return ofOptional(OptionalLong.empty());
     }
 
     public static OptionalLongex of(long value) {

@@ -175,9 +175,9 @@ public class LongStreamex {
         return internal.spliterator();
     }
 
-    public static LongStream.Builder builder() {
+    /*public static LongStream.Builder builder() { //TODO
         return LongStream.builder();
-    }
+    }*/
 
     public static LongStreamex empty() {
         return LongStreamex.ofStream(LongStream.empty());

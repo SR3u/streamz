@@ -44,8 +44,8 @@ public class Streamex<T> {
         return this;
     }
 
-    public <R> Stream<R> map(Functionex<T, ? extends R> mapper) {
-        return stream().map(wrap(mapper));
+    public <R> Streamex<R> map(Functionex<T, ? extends R> mapper) {
+        return Streamex.ofStream(stream().map(wrap(mapper)));
     }
 
     public IntStreamex mapToInt(ToIntFunctionex<T> mapper) {
@@ -139,7 +139,7 @@ public class Streamex<T> {
         return stream().collect(wrap(supplier), wrap(accumulator), wrap(combiner));
     }
 
-    public <R, A> R collect(Collector<T, A, R> collector) {
+    <R, A> R collect(Collector<? super T, A, R> collector) {
         return stream().collect(collector);
     }
 

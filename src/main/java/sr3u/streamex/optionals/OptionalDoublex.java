@@ -22,11 +22,11 @@ public class OptionalDoublex {
     }
 
     public static OptionalDoublex empty() {
-        return OptionalDoublex.ofOptional(OptionalDouble.empty());
+        return ofOptional(OptionalDouble.empty());
     }
 
     public static OptionalDoublex of(double value) {
-        return OptionalDoublex.ofOptional(OptionalDouble.of(value));
+        return ofOptional(OptionalDouble.of(value));
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
