@@ -7,7 +7,7 @@ Java 8 Streams and Optionals but with checked Exceptions
 ## Usage:
 ### Adding dependency
 #### Maven
-Add to your pom.xml a repository:
+* Add to your pom.xml a repository:
 ```xml
 <repositories>
   <repository>
@@ -16,7 +16,7 @@ Add to your pom.xml a repository:
   </repository>
 </repositories>
 ```
-Then a dependency
+* Then a dependency
 ```xml
 <dependency>
   <groupId>com.github.SR3u</groupId>
@@ -25,7 +25,7 @@ Then a dependency
 </dependency>
 ```
 #### Others
-see https://jitpack.io/#SR3u/streamex/
+* See https://jitpack.io/#SR3u/streamex/
 
 ### Examples
 The usage is pretty similar to regular Stream and Optional API available since Java 1.8,
