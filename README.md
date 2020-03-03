@@ -1,6 +1,8 @@
 # streamex
 Java 8 Streams and Optionals but with checked Exceptions
 
+![Java CI](https://github.com/SR3u/streamex/workflows/Java%20CI/badge.svg)
+
 ## Usage:
 Add to your pom.xml a repository:
 ```xml
