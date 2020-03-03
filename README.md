@@ -6,8 +6,8 @@ Add to your pom.xml a repository:
 ```xml
 <repositories>
   <repository>
-	  <id>jitpack.io</id>
-		<url>https://jitpack.io</url>
+    <id>jitpack.io</id>
+    <url>https://jitpack.io</url>
   </repository>
 </repositories>
 ```
