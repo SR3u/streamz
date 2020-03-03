@@ -5,7 +5,8 @@ Java 8 Streams and Optionals but with checked Exceptions
 [![JitPack](https://jitpack.io/v/SR3u/streamex.svg)](https://jitpack.io/#SR3u/streamex)
 
 ## Usage:
-### Maven
+### Adding dependency
+#### Maven
 Add to your pom.xml a repository:
 ```xml
 <repositories>
@@ -23,10 +24,11 @@ Then a dependency
   <version>-SNAPSHOT</version>
 </dependency>
 ```
-### Others
+#### Others
 see https://jitpack.io/#SR3u/streamex/
 
-The rest is pretty similar to usual Stream and Optional API available since Java 1.8,
+### Examples
+The usage is pretty similar to regular Stream and Optional API available since Java 1.8,
 but you don't have to wrap internals in try-catch blocks.
 
 ```java 
