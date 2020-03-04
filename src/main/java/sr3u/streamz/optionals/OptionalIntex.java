@@ -29,6 +29,14 @@ public class OptionalIntex {
         return new OptionalIntex(optionalInt);
     }
 
+    public Optionalex<Integer> boxed() {
+        if (internal.isPresent()) {
+            return Optionalex.of(internal.getAsInt());
+        } else {
+            return Optionalex.empty();
+        }
+    }
+
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     public int getAsInt() {
         return internal.getAsInt();

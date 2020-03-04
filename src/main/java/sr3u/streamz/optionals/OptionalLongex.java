@@ -30,6 +30,14 @@ public class OptionalLongex {
         return ofOptional(OptionalLong.of(value));
     }
 
+    public Optionalex<Long> boxed() {
+        if (internal.isPresent()) {
+            return Optionalex.of(internal.getAsLong());
+        } else {
+            return Optionalex.empty();
+        }
+    }
+
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     public long getAsLong() {
         return internal.getAsLong();

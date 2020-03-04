@@ -3,6 +3,9 @@ package sr3u.streamz.optionals;
 import sr3u.streamz.functionals.Consumerex;
 import sr3u.streamz.functionals.Functionex;
 import sr3u.streamz.functionals.Predicatex;
+import sr3u.streamz.functionals.primitive.doublefloat.ToDoubleFunctionex;
+import sr3u.streamz.functionals.primitive.integer.ToIntFunctionex;
+import sr3u.streamz.functionals.primitive.longinteger.ToLongFunctionex;
 
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -57,6 +60,33 @@ public class Optionalex<T> {
 
     public <U> Optionalex<U> map(Functionex<? super T, ? extends U> mapper) {
         return Optionalex.ofOptional(internal.map(wrap(mapper)));
+    }
+
+    public OptionalIntex mapToInt(ToIntFunctionex<T> mapper) {
+        if (isPresent()) {
+            int i = wrap(mapper).applyAsInt(get());
+            return OptionalIntex.of(i);
+        } else {
+            return OptionalIntex.empty();
+        }
+    }
+
+    public OptionalLongex mapToLong(ToLongFunctionex<T> mapper) {
+        if (isPresent()) {
+            long i = wrap(mapper).applyAsLong(get());
+            return OptionalLongex.of(i);
+        } else {
+            return OptionalLongex.empty();
+        }
+    }
+
+    public OptionalDoublex mapToLong(ToDoubleFunctionex<T> mapper) {
+        if (isPresent()) {
+            double i = wrap(mapper).applyAsDouble(get());
+            return OptionalDoublex.of(i);
+        } else {
+            return OptionalDoublex.empty();
+        }
     }
 
     public <U> Optionalex<U> flatMap(Functionex<? super T, Optionalex<U>> mapper) {

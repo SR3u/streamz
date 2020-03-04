@@ -1,11 +1,14 @@
 package sr3u.streamz.streams;
 
 import org.junit.Test;
+import sr3u.streamz.optionals.Optionalex;
 
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class StreamexTest {
 
@@ -82,6 +85,85 @@ public class StreamexTest {
     }
 
     @Test
+    public void anyMatch() {
+        assertFalse(createStream()
+                .anyMatch(item -> "".equals(item.getaString())));
+        assertTrue(createStream()
+                .anyMatch(item -> "2".equals(item.getaString())));
+        assertTrue(createStream()
+                .anyMatch(item -> "4".equals(item.getaString())));
+    }
+
+    @Test
+    public void allMatch() {
+        assertTrue(createStream()
+                .map(item -> item.setaString("A"))
+                .map(Item::getaString)
+                .allMatch("A"::equals));
+        assertFalse(createStream()
+                .map(item -> item.setaString("B"))
+                .map(Item::getaString)
+                .allMatch("A"::equals));
+        assertFalse(createStream()
+                .map(Item::getaString)
+                .allMatch("A"::equals));
+    }
+
+    @Test
+    public void noneMatch() {
+        assertTrue(createStream()
+                .noneMatch(item -> "".equals(item.getaString())));
+        assertFalse(createStream()
+                .noneMatch(item -> "2".equals(item.getaString())));
+        assertFalse(createStream()
+                .noneMatch(item -> "4".equals(item.getaString())));
+    }
+
+    @Test
+    public void findFirst() {
+        String actual = createStream()
+                .map(Item::getaString)
+                .findFirst()
+                .orElse("ERROR");
+        assertEquals("0", actual);
+    }
+
+    @Test
+    public void collect() {
+        String expected = "FIVE, FOUR, ONE, THREE, TWO";
+
+        String actual = Streamex.of("one", "three", "two", "three", "two", "four", "five")
+                .map(String::toUpperCase)
+                .sorted()
+                .distinct()
+                .collect(Collectors.joining(", "));
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void count() {
+        assertEquals(5, createStream().count());
+    }
+
+    @Test
+    public void min() {
+        Optionalex<Item> min = createStream()
+                .min(Comparator.comparing(Item::getAnInt));
+        int integer = min.mapToInt(Item::getAnInt)
+                .orElseThrow(RuntimeException::new);
+        assertEquals(0, integer);
+    }
+
+    @Test
+    public void max() {
+        Optionalex<Item> min = createStream()
+                .max(Comparator.comparing(Item::getAnInt));
+        int integer = min.mapToInt(Item::getAnInt)
+                .orElseThrow(RuntimeException::new);
+        assertEquals(4, integer);
+    }
+
+    @Test
     public void flatMap() {
     }
 
@@ -127,55 +209,6 @@ public class StreamexTest {
 
     @Test
     public void reduce() {
-    }
-
-    @Test
-    public void testReduce() {
-    }
-
-    @Test
-    public void testReduce1() {
-    }
-
-    @Test
-    public void collect() {
-    }
-
-    @Test
-    public void testCollect() {
-    }
-
-    @Test
-    public void min() {
-    }
-
-    @Test
-    public void max() {
-    }
-
-    @Test
-    public void count() {
-    }
-
-    @Test
-    public void anyMatch() {
-    }
-
-    @Test
-    public void allMatch() {
-    }
-
-    @Test
-    public void noneMatch() {
-    }
-
-    @Test
-    public void findFirst() {
-        String actual = createStream()
-                .map(Item::getaString)
-                .findFirst()
-                .orElse("ERROR");
-        assertEquals("0", actual);
     }
 
     @Test
@@ -257,32 +290,36 @@ public class StreamexTest {
             return aString;
         }
 
-        public void setaString(String aString) {
+        public Item setaString(String aString) {
             this.aString = aString;
+            return this;
         }
 
         public int getAnInt() {
             return anInt;
         }
 
-        public void setAnInt(int anInt) {
+        public Item setAnInt(int anInt) {
             this.anInt = anInt;
+            return this;
         }
 
         public long getaLong() {
             return aLong;
         }
 
-        public void setaLong(long aLong) {
+        public Item setaLong(long aLong) {
             this.aLong = aLong;
+            return this;
         }
 
         public double getaDouble() {
             return aDouble;
         }
 
-        public void setaDouble(double aDouble) {
+        public Item setaDouble(double aDouble) {
             this.aDouble = aDouble;
+            return this;
         }
     }
 }

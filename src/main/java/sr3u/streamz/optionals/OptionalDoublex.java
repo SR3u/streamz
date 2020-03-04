@@ -29,6 +29,14 @@ public class OptionalDoublex {
         return ofOptional(OptionalDouble.of(value));
     }
 
+    public Optionalex<Double> boxed() {
+        if (internal.isPresent()) {
+            return Optionalex.of(internal.getAsDouble());
+        } else {
+            return Optionalex.empty();
+        }
+    }
+
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     public double getAsDouble() {
         return internal.getAsDouble();
