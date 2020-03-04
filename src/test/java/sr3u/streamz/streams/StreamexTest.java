@@ -13,6 +13,8 @@ import static org.junit.Assert.assertTrue;
 
 public class StreamexTest {
 
+    public static final String EXPECTED_ALL_ORDERED = "0, 1, 2, 3, 4";
+
     @Test
     public void filter() {
         String actual = createStream()
@@ -28,7 +30,7 @@ public class StreamexTest {
                 .mapToInt(Item::getAnInt)
                 .mapToObj(i -> "" + i)
                 .collect(Collectors.joining(", "));
-        assertEquals("0, 1, 2, 3, 4", actual);
+        assertEquals(EXPECTED_ALL_ORDERED, actual);
     }
 
     @Test
@@ -37,7 +39,7 @@ public class StreamexTest {
                 .mapToLong(Item::getaLong)
                 .mapToObj(i -> "" + i)
                 .collect(Collectors.joining(", "));
-        assertEquals("0, 1, 2, 3, 4", actual);
+        assertEquals(EXPECTED_ALL_ORDERED, actual);
     }
 
     @Test
@@ -55,7 +57,7 @@ public class StreamexTest {
                 .map(Item::getaString)
                 .distinct()
                 .collect(Collectors.joining(", "));
-        assertEquals("0, 1, 2, 3, 4", actual);
+        assertEquals(EXPECTED_ALL_ORDERED, actual);
     }
 
     @Test
@@ -64,7 +66,7 @@ public class StreamexTest {
                 .distinct(Item::getaString)
                 .map(Item::getaString)
                 .collect(Collectors.joining(", "));
-        assertEquals("0, 1, 2, 3, 4", actual);
+        assertEquals(EXPECTED_ALL_ORDERED, actual);
     }
 
     @Test
@@ -73,7 +75,7 @@ public class StreamexTest {
                 .mapToInt(Item::getAnInt)
                 .mapToObj(i -> "" + i)
                 .collect(Collectors.joining(", "));
-        assertEquals("0, 1, 2, 3, 4", actual);
+        assertEquals(EXPECTED_ALL_ORDERED, actual);
     }
 
     @Test
@@ -82,7 +84,7 @@ public class StreamexTest {
                 .map(Item::getaString)
                 .sorted()
                 .collect(Collectors.joining(", "));
-        assertEquals("0, 1, 2, 3, 4", actual);
+        assertEquals(EXPECTED_ALL_ORDERED, actual);
     }
 
     @Test
