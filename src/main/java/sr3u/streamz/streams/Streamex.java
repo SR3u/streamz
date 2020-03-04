@@ -1,5 +1,6 @@
 package sr3u.streamz.streams;
 
+import sr3u.streamz.common.Utils;
 import sr3u.streamz.functionals.BiConsumerex;
 import sr3u.streamz.functionals.BiFunctionex;
 import sr3u.streamz.functionals.BinaryOperatorex;
@@ -17,6 +18,8 @@ import sr3u.streamz.optionals.Optionalex;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Spliterator;
+import java.util.function.IntFunction;
+import java.util.function.Predicate;
 import java.util.stream.Collector;
 import java.util.stream.Stream;
 
@@ -39,13 +42,17 @@ public class Streamex<T> {
         return internal;
     }
 
+    private void setStream(Stream<T> stream) {
+        internal = stream;
+    }
+
     public Streamex<T> filter(Predicatex<T> predicate) {
         internal = stream().filter(wrap(predicate));
         return this;
     }
 
     public <R> Streamex<R> map(Functionex<T, ? extends R> mapper) {
-        return Streamex.ofStream(stream().map(wrap(mapper)));
+        return ofStream(stream().map(wrap(mapper)));
     }
 
     public IntStreamex mapToInt(ToIntFunctionex<T> mapper) {
@@ -61,7 +68,7 @@ public class Streamex<T> {
     }
 
     public <R> Streamex<R> flatMap(Functionex<T, ? extends Streamex<? extends R>> mapper) {
-        return Streamex.ofStream(stream().flatMap(wrapStream(mapper)));
+        return ofStream(stream().flatMap(wrapStream(mapper)));
     }
 
     public IntStreamex flatMapToInt(Functionex<T, ? extends IntStreamex> mapper) {
@@ -79,6 +86,12 @@ public class Streamex<T> {
 
     public Streamex<T> distinct() {
         internal = stream().distinct();
+        return this;
+    }
+
+    public <P> Streamex<T> distinct(Functionex<T, P> getter) {
+        Predicate<T> wrap = wrap(Utils.distinctByKey(getter));
+        internal = stream().filter(wrap);
         return this;
     }
 
@@ -120,7 +133,8 @@ public class Streamex<T> {
     }
 
     public <A> A[] toArray(IntFunctionex<A[]> generator) {
-        return stream().toArray(wrapArray(generator));
+        final IntFunction<A[]> wrappedGenerator = wrapArray(generator);
+        return stream().toArray(wrappedGenerator);
     }
 
     public T reduce(T identity, BinaryOperatorex<T> accumulator) {
@@ -180,11 +194,11 @@ public class Streamex<T> {
     }*/
 
     public static <T1> Streamex<T1> empty() {
-        return Streamex.ofStream(Stream.empty());
+        return ofStream(Stream.empty());
     }
 
     public static <T1> Streamex<T1> of(T1 t1) {
-        return Streamex.ofStream(Stream.of(t1));
+        return ofStream(Stream.of(t1));
     }
 
     public static <T1> Streamex<T1> ofStream(Stream<T1> t1) {
@@ -197,15 +211,15 @@ public class Streamex<T> {
     }
 
     public static <T1> Streamex<T1> iterate(T1 seed, UnaryOperatorex<T1> f) {
-        return Streamex.ofStream(Stream.iterate(seed, wrap(f)));
+        return ofStream(Stream.iterate(seed, wrap(f)));
     }
 
     public static <T> Streamex<T> generate(Supplierex<T> s) {
-        return Streamex.ofStream(Stream.generate(wrap(s)));
+        return ofStream(Stream.generate(wrap(s)));
     }
 
     public static <T> Streamex<T> concat(Streamex<T> a, Streamex<T> b) {
-        return Streamex.ofStream(Stream.concat(a.stream(), b.stream()));
+        return ofStream(Stream.concat(a.stream(), b.stream()));
     }
 
     public Iterator<T> iterator() {
@@ -221,19 +235,23 @@ public class Streamex<T> {
     }
 
     public Streamex<T> sequential() {
-        return Streamex.ofStream(stream().sequential());
+        setStream(stream().sequential());
+        return this;
     }
 
     public Streamex<T> parallel() {
-        return Streamex.ofStream(stream().parallel());
+        setStream(stream().parallel());
+        return this;
     }
 
     public Streamex<T> unordered() {
-        return Streamex.ofStream(stream().unordered());
+        setStream(stream().unordered());
+        return this;
     }
 
     public Streamex<T> onClose(Runnable closeHandler) {
-        return Streamex.ofStream(stream().onClose(closeHandler));
+        setStream(stream().onClose(closeHandler));
+        return this;
     }
 
     public void close() {

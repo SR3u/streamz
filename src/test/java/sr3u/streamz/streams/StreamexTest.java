@@ -55,6 +55,15 @@ public class StreamexTest {
     }
 
     @Test
+    public void distinctByKey() {
+        String actual = Streamex.concat(createStream(), createStream())
+                .distinct(Item::getaString)
+                .map(Item::getaString)
+                .collect(Collectors.joining(", "));
+        assertEquals("0, 1, 2, 3, 4", actual);
+    }
+
+    @Test
     public void sorted() {
         String actual = createStream()
                 .mapToInt(Item::getAnInt)
@@ -178,27 +187,11 @@ public class StreamexTest {
     }
 
     @Test
-    public void of() {
-    }
-
-    @Test
-    public void ofStream() {
-    }
-
-    @Test
-    public void testOf() {
-    }
-
-    @Test
     public void iterate() {
     }
 
     @Test
     public void generate() {
-    }
-
-    @Test
-    public void concat() {
     }
 
     @Test
