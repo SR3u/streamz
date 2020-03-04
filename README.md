@@ -25,7 +25,7 @@ Java 8 Streams and Optionals but with checked Exceptions
 </dependency>
 ```
 #### Others
-* See https://jitpack.io/#SR3u/streamex/
+* See https://jitpack.io/#SR3u/streamz/
 
 ### Examples
 The usage is pretty similar to regular Stream and Optional API available since Java 1.8,
