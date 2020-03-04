@@ -1,4 +1,4 @@
-# streamex
+# streamz
 Java 8 Streams and Optionals but with checked Exceptions
 
 ![Java CI](https://github.com/SR3u/streamex/workflows/Java%20CI/badge.svg)
@@ -20,7 +20,7 @@ Java 8 Streams and Optionals but with checked Exceptions
 ```xml
 <dependency>
   <groupId>com.github.SR3u</groupId>
-  <artifactId>streamex</artifactId>
+  <artifactId>streamz</artifactId>
   <version>-SNAPSHOT</version>
 </dependency>
 ```
