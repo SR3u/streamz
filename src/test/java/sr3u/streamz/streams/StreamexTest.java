@@ -4,6 +4,7 @@ import org.junit.Test;
 import sr3u.streamz.optionals.Optionalex;
 
 import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
@@ -165,30 +166,103 @@ public class StreamexTest {
 
     @Test
     public void flatMap() {
+        List<Integer> source = Streamex.of(1, 2, 3, 4, 5, 6).collect(Collectors.toList());
+        int[] destination = Streamex.of(source)
+                .flatMap(list -> Streamex.of(list.toArray()))
+                .mapToInt(i -> (Integer) i)
+                .toArray();
+        Integer expected = source.get(3);
+        Integer actual = destination[3];
+        assertEquals(expected, actual);
     }
 
     @Test
     public void flatMapToInt() {
+        List<Integer> source = Streamex.of(1, 2, 3, 4, 5, 6).collect(Collectors.toList());
+        int[] destination = Streamex.of(source)
+                .flatMapToInt(list -> {
+                    int[] ints = new int[list.size()];
+                    for (int i = 0; i < list.size(); i++) {
+                        ints[i] = list.get(i);
+                    }
+                    return IntStreamex.of(ints);
+                })
+                .toArray();
+        Integer expected = source.get(3);
+        Integer actual = destination[3];
+        assertEquals(expected, actual);
     }
 
     @Test
     public void flatMapToLong() {
+        List<Long> source = Streamex.of(1, 2, 3, 4, 5, 6)
+                .mapToLong(Integer::longValue)
+                .boxed()
+                .collect(Collectors.toList());
+        long[] destination = Streamex.of(source)
+                .flatMapToLong(list -> {
+                    long[] longs = new long[list.size()];
+                    for (int i = 0; i < list.size(); i++) {
+                        longs[i] = list.get(i);
+                    }
+                    return LongStreamex.of(longs);
+                })
+                .toArray();
+        Long expected = source.get(3);
+        Long actual = destination[3];
+        assertEquals(expected, actual);
     }
 
     @Test
     public void flatMapToDouble() {
+        List<Double> source = Streamex.of(1.1, 2, 3.2, 4, 5, 6)
+                .mapToDouble(Number::doubleValue)
+                .boxed()
+                .collect(Collectors.toList());
+        double[] destination = Streamex.of(source)
+                .flatMapToDouble(list -> {
+                    double[] doubles = new double[list.size()];
+                    for (int i = 0; i < list.size(); i++) {
+                        doubles[i] = list.get(i);
+                    }
+                    return DoubleStreamex.of(doubles);
+                })
+                .toArray();
+        Double expected = source.get(3);
+        Double actual = destination[3];
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void empty() {
+        assertEquals(0, Streamex.empty().count());
+    }
+
+    @Test
+    public void reduce() {
+        Item item = createStream()
+                .reduce((a, b) -> b).orElse(null);
+        assertEquals(4, item.getAnInt());
+    }
+
+    @Test
+    public void skipAndLimit() {
+        List<Item> collect = createStream()
+                .skip(2)
+                .limit(1)
+                .collect(Collectors.toList());
+        assertEquals(1, collect.size());
+        assertEquals(2, collect.get(0).getAnInt());
+    }
+
+    @Test
+    public void parallelAndSequential() {
+        assertTrue(createStream().parallel().isParallel());
+        assertFalse(createStream().sequential().isParallel());
     }
 
     @Test
     public void peek() {
-    }
-
-    @Test
-    public void limit() {
-    }
-
-    @Test
-    public void skip() {
     }
 
     @Test
@@ -204,19 +278,7 @@ public class StreamexTest {
     }
 
     @Test
-    public void testToArray() {
-    }
-
-    @Test
-    public void reduce() {
-    }
-
-    @Test
     public void findAny() {
-    }
-
-    @Test
-    public void empty() {
     }
 
     @Test
@@ -225,26 +287,6 @@ public class StreamexTest {
 
     @Test
     public void generate() {
-    }
-
-    @Test
-    public void iterator() {
-    }
-
-    @Test
-    public void spliterator() {
-    }
-
-    @Test
-    public void isParallel() {
-    }
-
-    @Test
-    public void sequential() {
-    }
-
-    @Test
-    public void parallel() {
     }
 
     @Test
