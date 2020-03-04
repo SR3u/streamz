@@ -24,7 +24,7 @@ import static sr3u.streamz.common.primitive.LongExceptionWrapper.wrap;
 
 public class LongStreamex {
 
-    protected final LongStream internal;
+    protected LongStream internal;
 
     private LongStreamex(LongStream longStream) {
         this.internal = longStream;
@@ -34,17 +34,22 @@ public class LongStreamex {
         return internal;
     }
 
+    private LongStreamex setStream(LongStream stream) {
+        internal = stream;
+        return this;
+    }
+
     public static LongStreamex ofStream(LongStream longStream) {
         return new LongStreamex(longStream);
     }
 
 
     public LongStreamex filter(LongPredicatex predicate) {
-        return LongStreamex.ofStream(internal.filter(wrap(predicate)));
+        return setStream(internal.filter(wrap(predicate)));
     }
 
     public LongStreamex map(LongUnaryOperatorex mapper) {
-        return LongStreamex.ofStream(internal.map(wrap(mapper)));
+        return setStream(internal.map(wrap(mapper)));
     }
 
     public <U> Streamex<U> mapToObj(LongFunctionex<? extends U> mapper) {
@@ -60,27 +65,27 @@ public class LongStreamex {
     }
 
     public LongStreamex flatMap(LongFunctionex<? extends LongStream> mapper) {
-        return LongStreamex.ofStream(internal.flatMap(wrap(mapper)));
+        return setStream(internal.flatMap(wrap(mapper)));
     }
 
     public LongStreamex distinct() {
-        return LongStreamex.ofStream(internal.distinct());
+        return setStream(internal.distinct());
     }
 
     public LongStreamex sorted() {
-        return LongStreamex.ofStream(internal.sorted());
+        return setStream(internal.sorted());
     }
 
     public LongStreamex peek(LongConsumerex action) {
-        return LongStreamex.ofStream(internal.peek(wrap(action)));
+        return setStream(internal.peek(wrap(action)));
     }
 
     public LongStreamex limit(long maxSize) {
-        return LongStreamex.ofStream(internal.limit(maxSize));
+        return setStream(internal.limit(maxSize));
     }
 
     public LongStreamex skip(long n) {
-        return LongStreamex.ofStream(internal.skip(n));
+        return setStream(internal.skip(n));
     }
 
     public void forEach(LongConsumerex action) {
@@ -160,11 +165,11 @@ public class LongStreamex {
     }
 
     public LongStreamex sequential() {
-        return LongStreamex.ofStream(internal.sequential());
+        return setStream(internal.sequential());
     }
 
     public LongStreamex parallel() {
-        return LongStreamex.ofStream(internal.parallel());
+        return setStream(internal.parallel());
     }
 
     public PrimitiveIterator.OfLong iterator() {
@@ -180,35 +185,35 @@ public class LongStreamex {
     }*/
 
     public static LongStreamex empty() {
-        return LongStreamex.ofStream(LongStream.empty());
+        return ofStream(LongStream.empty());
     }
 
     public static LongStreamex of(long t) {
-        return LongStreamex.ofStream(LongStream.of(t));
+        return ofStream(LongStream.of(t));
     }
 
     public static LongStreamex of(long... values) {
-        return LongStreamex.ofStream(LongStream.of(values));
+        return ofStream(LongStream.of(values));
     }
 
     public static LongStreamex iterate(long seed, LongUnaryOperatorex f) {
-        return LongStreamex.ofStream(LongStream.iterate(seed, wrap(f)));
+        return ofStream(LongStream.iterate(seed, wrap(f)));
     }
 
     public static LongStreamex generate(LongSupplierex s) {
-        return LongStreamex.ofStream(LongStream.generate(wrap(s)));
+        return ofStream(LongStream.generate(wrap(s)));
     }
 
     public static LongStreamex range(long startInclusive, long endExclusive) {
-        return LongStreamex.ofStream(LongStream.range(startInclusive, endExclusive));
+        return ofStream(LongStream.range(startInclusive, endExclusive));
     }
 
     public static LongStreamex rangeClosed(long startInclusive, long endInclusive) {
-        return LongStreamex.ofStream(LongStream.rangeClosed(startInclusive, endInclusive));
+        return ofStream(LongStream.rangeClosed(startInclusive, endInclusive));
     }
 
     public static LongStreamex concat(LongStreamex a, LongStreamex b) {
-        return LongStreamex.ofStream(LongStream.concat(a.internal, b.internal));
+        return ofStream(LongStream.concat(a.internal, b.internal));
     }
 
     public boolean isParallel() {
@@ -216,11 +221,11 @@ public class LongStreamex {
     }
 
     public LongStreamex unordered() {
-        return LongStreamex.ofStream(internal.unordered());
+        return setStream(internal.unordered());
     }
 
     public LongStreamex onClose(Runnable closeHandler) {
-        return LongStreamex.ofStream(internal.onClose(closeHandler));
+        return setStream(internal.onClose(closeHandler));
     }
 
     public void close() {

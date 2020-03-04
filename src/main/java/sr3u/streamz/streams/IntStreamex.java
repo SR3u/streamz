@@ -24,10 +24,15 @@ import static sr3u.streamz.common.primitive.IntExceptionWrapper.wrap;
 
 public class IntStreamex {
 
-    protected final IntStream internal;
+    protected IntStream internal;
 
     public IntStream stream() {
         return internal;
+    }
+
+    private IntStreamex setStream(IntStream stream) {
+        internal = stream;
+        return this;
     }
 
     private IntStreamex(IntStream intStream) {
@@ -39,11 +44,11 @@ public class IntStreamex {
     }
 
     public IntStreamex filter(IntPredicatex predicate) {
-        return IntStreamex.ofStream(internal.filter(wrap(predicate)));
+        return setStream(internal.filter(wrap(predicate)));
     }
 
     public IntStreamex map(IntUnaryOperatorex mapper) {
-        return IntStreamex.ofStream(internal.map(wrap(mapper)));
+        return setStream(internal.map(wrap(mapper)));
     }
 
     public <U> Streamex<? extends U> mapToObj(IntFunctionex<? extends U> mapper) {
@@ -59,27 +64,27 @@ public class IntStreamex {
     }
 
     public IntStreamex flatMap(IntFunctionex<? extends IntStream> mapper) {
-        return IntStreamex.ofStream(internal.flatMap(wrap(mapper)));
+        return setStream(internal.flatMap(wrap(mapper)));
     }
 
     public IntStreamex distinct() {
-        return IntStreamex.ofStream(internal.distinct());
+        return setStream(internal.distinct());
     }
 
     public IntStreamex sorted() {
-        return IntStreamex.ofStream(internal.sorted());
+        return setStream(internal.sorted());
     }
 
     public IntStreamex peek(IntConsumerex action) {
-        return IntStreamex.ofStream(internal.peek(wrap(action)));
+        return setStream(internal.peek(wrap(action)));
     }
 
     public IntStreamex limit(long maxSize) {
-        return IntStreamex.ofStream(internal.limit(maxSize));
+        return setStream(internal.limit(maxSize));
     }
 
     public IntStreamex skip(long n) {
-        return IntStreamex.ofStream(internal.skip(n));
+        return setStream(internal.skip(n));
     }
 
     public void forEach(IntConsumerex action) {
@@ -165,11 +170,11 @@ public class IntStreamex {
     }
 
     public IntStreamex sequential() {
-        return IntStreamex.ofStream(internal.sequential());
+        return setStream(internal.sequential());
     }
 
     public IntStreamex parallel() {
-        return IntStreamex.ofStream(internal.parallel());
+        return setStream(internal.parallel());
     }
 
     public PrimitiveIterator.OfInt iterator() {
@@ -185,35 +190,35 @@ public class IntStreamex {
     }*/
 
     public static IntStreamex empty() {
-        return IntStreamex.ofStream(IntStream.empty());
+        return ofStream(IntStream.empty());
     }
 
     public static IntStreamex of(int t) {
-        return IntStreamex.ofStream(IntStream.of(t));
+        return ofStream(IntStream.of(t));
     }
 
     public static IntStreamex of(int... values) {
-        return IntStreamex.ofStream(IntStream.of(values));
+        return ofStream(IntStream.of(values));
     }
 
     public static IntStreamex iterate(int seed, IntUnaryOperatorex f) {
-        return IntStreamex.ofStream(IntStream.iterate(seed, wrap(f)));
+        return ofStream(IntStream.iterate(seed, wrap(f)));
     }
 
     public static IntStreamex generate(IntSupplierex s) {
-        return IntStreamex.ofStream(IntStream.generate(wrap(s)));
+        return ofStream(IntStream.generate(wrap(s)));
     }
 
     public static IntStreamex range(int startInclusive, int endExclusive) {
-        return IntStreamex.ofStream(IntStream.range(startInclusive, endExclusive));
+        return ofStream(IntStream.range(startInclusive, endExclusive));
     }
 
     public static IntStreamex rangeClosed(int startInclusive, int endInclusive) {
-        return IntStreamex.ofStream(IntStream.rangeClosed(startInclusive, endInclusive));
+        return ofStream(IntStream.rangeClosed(startInclusive, endInclusive));
     }
 
     public static IntStreamex concat(IntStreamex a, IntStreamex b) {
-        return IntStreamex.ofStream(IntStream.concat(a.internal, b.internal));
+        return ofStream(IntStream.concat(a.internal, b.internal));
     }
 
     public boolean isParallel() {
@@ -221,11 +226,11 @@ public class IntStreamex {
     }
 
     public IntStreamex unordered() {
-        return IntStreamex.ofStream(internal.unordered());
+        return setStream(internal.unordered());
     }
 
     public IntStreamex onClose(Runnable closeHandler) {
-        return IntStreamex.ofStream(internal.onClose(closeHandler));
+        return setStream(internal.onClose(closeHandler));
     }
 
     public void close() {

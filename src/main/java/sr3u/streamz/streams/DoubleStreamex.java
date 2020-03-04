@@ -23,7 +23,6 @@ import static sr3u.streamz.common.ExceptionWrapper.wrap;
 import static sr3u.streamz.common.primitive.DoubleExceptionWrapper.wrap;
 
 public class DoubleStreamex {
-
     protected DoubleStream internal;
 
     private DoubleStreamex(DoubleStream doubleStream) {
@@ -34,16 +33,21 @@ public class DoubleStreamex {
         return internal;
     }
 
+    private DoubleStreamex setStream(DoubleStream stream) {
+        internal = stream;
+        return this;
+    }
+
     public static DoubleStreamex ofStream(DoubleStream doubleStream) {
         return new DoubleStreamex(doubleStream);
     }
 
     public DoubleStreamex filter(DoublePredicatex predicate) {
-        return DoubleStreamex.ofStream(internal.filter(wrap(predicate)));
+        return setStream(internal.filter(wrap(predicate)));
     }
 
     public DoubleStreamex map(DoubleUnaryOperatorex mapper) {
-        return DoubleStreamex.ofStream(internal.map(wrap(mapper)));
+        return setStream(internal.map(wrap(mapper)));
     }
 
     public <U> Streamex<? extends U> mapToObj(DoubleFunctionex<? extends U> mapper) {
@@ -59,27 +63,27 @@ public class DoubleStreamex {
     }
 
     public DoubleStreamex flatMap(DoubleFunctionex<? extends DoubleStream> mapper) {
-        return DoubleStreamex.ofStream(internal.flatMap(wrap(mapper)));
+        return setStream(internal.flatMap(wrap(mapper)));
     }
 
     public DoubleStreamex distinct() {
-        return DoubleStreamex.ofStream(internal.distinct());
+        return setStream(internal.distinct());
     }
 
     public DoubleStreamex sorted() {
-        return DoubleStreamex.ofStream(internal.sorted());
+        return setStream(internal.sorted());
     }
 
     public DoubleStreamex peek(DoubleConsumerex action) {
-        return DoubleStreamex.ofStream(internal.peek(wrap(action)));
+        return setStream(internal.peek(wrap(action)));
     }
 
     public DoubleStreamex limit(long maxSize) {
-        return DoubleStreamex.ofStream(internal.limit(maxSize));
+        return setStream(internal.limit(maxSize));
     }
 
     public DoubleStreamex skip(long n) {
-        return DoubleStreamex.ofStream(internal.skip(n));
+        return setStream(internal.skip(n));
     }
 
     public void forEach(DoubleConsumerex action) {
@@ -155,11 +159,11 @@ public class DoubleStreamex {
     }
 
     public DoubleStreamex sequential() {
-        return DoubleStreamex.ofStream(internal.sequential());
+        return setStream(internal.sequential());
     }
 
     public DoubleStreamex parallel() {
-        return DoubleStreamex.ofStream(internal.parallel());
+        return setStream(internal.parallel());
     }
 
     public PrimitiveIterator.OfDouble iterator() {
@@ -168,34 +172,30 @@ public class DoubleStreamex {
 
     public Spliterator.OfDouble spliterator() {
         return internal.spliterator();
-    }
-
-    /*public static Builder builder() {//TODO
-        return DoubleStream.builder();
-    }*/
+    }    /*public static Builder builder() {//TODO        return DoubleStream.builder();    }*/
 
     public static DoubleStreamex empty() {
-        return DoubleStreamex.ofStream(DoubleStream.empty());
+        return ofStream(DoubleStream.empty());
     }
 
     public static DoubleStreamex of(double t) {
-        return DoubleStreamex.ofStream(DoubleStream.of(t));
+        return ofStream(DoubleStream.of(t));
     }
 
     public static DoubleStreamex of(double... values) {
-        return DoubleStreamex.ofStream(DoubleStream.of(values));
+        return ofStream(DoubleStream.of(values));
     }
 
     public static DoubleStreamex iterate(double seed, DoubleUnaryOperatorex f) {
-        return DoubleStreamex.ofStream(DoubleStream.iterate(seed, wrap(f)));
+        return ofStream(DoubleStream.iterate(seed, wrap(f)));
     }
 
     public static DoubleStreamex generate(DoubleSupplierex s) {
-        return DoubleStreamex.ofStream(DoubleStream.generate(wrap(s)));
+        return ofStream(DoubleStream.generate(wrap(s)));
     }
 
     public static DoubleStreamex concat(DoubleStreamex a, DoubleStreamex b) {
-        return DoubleStreamex.ofStream(DoubleStream.concat(a.internal, b.internal));
+        return ofStream(DoubleStream.concat(a.internal, b.internal));
     }
 
     public boolean isParallel() {
@@ -203,12 +203,11 @@ public class DoubleStreamex {
     }
 
     public DoubleStreamex unordered() {
-        return DoubleStreamex.ofStream(internal.unordered());
+        return setStream(internal.unordered());
     }
 
     public DoubleStreamex onClose(Runnable closeHandler) {
-        internal = internal.onClose(closeHandler);
-        return this;
+        return setStream(internal.onClose(closeHandler));
     }
 
     public void close() {

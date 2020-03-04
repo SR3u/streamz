@@ -31,7 +31,6 @@ import static sr3u.streamz.common.ExceptionWrapper.wrapLongStream;
 import static sr3u.streamz.common.ExceptionWrapper.wrapStream;
 
 public class Streamex<T> {
-
     protected Stream<T> internal;
 
     protected Streamex(Stream<T> stream) {
@@ -42,156 +41,144 @@ public class Streamex<T> {
         return internal;
     }
 
-    private void setStream(Stream<T> stream) {
+    private Streamex<T> setStream(Stream<T> stream) {
         internal = stream;
+        return this;
     }
 
     public Streamex<T> filter(Predicatex<T> predicate) {
-        internal = stream().filter(wrap(predicate));
-        return this;
+        return setStream(internal.filter(wrap(predicate)));
     }
 
     public <R> Streamex<R> map(Functionex<T, ? extends R> mapper) {
-        return ofStream(stream().map(wrap(mapper)));
+        return ofStream(internal.map(wrap(mapper)));
     }
 
     public IntStreamex mapToInt(ToIntFunctionex<T> mapper) {
-        return IntStreamex.ofStream(stream().mapToInt(wrap(mapper)));
+        return IntStreamex.ofStream(internal.mapToInt(wrap(mapper)));
     }
 
     public LongStreamex mapToLong(ToLongFunctionex<T> mapper) {
-        return LongStreamex.ofStream(stream().mapToLong(wrap(mapper)));
+        return LongStreamex.ofStream(internal.mapToLong(wrap(mapper)));
     }
 
     public DoubleStreamex mapToDouble(ToDoubleFunctionex<T> mapper) {
-        return DoubleStreamex.ofStream(stream().mapToDouble(wrap(mapper)));
+        return DoubleStreamex.ofStream(internal.mapToDouble(wrap(mapper)));
     }
 
     public <R> Streamex<R> flatMap(Functionex<T, ? extends Streamex<? extends R>> mapper) {
-        return ofStream(stream().flatMap(wrapStream(mapper)));
+        return ofStream(internal.flatMap(wrapStream(mapper)));
     }
 
     public IntStreamex flatMapToInt(Functionex<T, ? extends IntStreamex> mapper) {
-        return IntStreamex.ofStream(stream().flatMapToInt(wrapIntStream(mapper)));
+        return IntStreamex.ofStream(internal.flatMapToInt(wrapIntStream(mapper)));
     }
 
     public LongStreamex flatMapToLong(Functionex<T, ? extends LongStreamex> mapper) {
-        return LongStreamex.ofStream(stream().flatMapToLong(wrapLongStream(mapper)));
+        return LongStreamex.ofStream(internal.flatMapToLong(wrapLongStream(mapper)));
     }
 
-
     public DoubleStreamex flatMapToDouble(Functionex<T, ? extends DoubleStreamex> mapper) {
-        return DoubleStreamex.ofStream(stream().flatMapToDouble(wrapDoubleStream(mapper)));
+        return DoubleStreamex.ofStream(internal.flatMapToDouble(wrapDoubleStream(mapper)));
     }
 
     public Streamex<T> distinct() {
-        internal = stream().distinct();
-        return this;
+        return setStream(internal.distinct());
     }
 
     public <P> Streamex<T> distinct(Functionex<T, P> getter) {
         Predicate<T> wrap = wrap(Utils.distinctByKey(getter));
-        internal = stream().filter(wrap);
-        return this;
+        return setStream(internal.filter(wrap));
     }
 
     public Streamex<T> sorted() {
-        internal = stream().sorted();
-        return this;
+        return setStream(internal.sorted());
     }
 
     public Streamex<T> sorted(Comparator<T> comparator) {
-        internal = stream().sorted(comparator);
-        return this;
+        return setStream(internal.sorted(comparator));
     }
 
     public Streamex<T> peek(Consumerex<T> action) {
-        internal = stream().peek(wrap(action));
-        return this;
+        return setStream(internal.peek(wrap(action)));
     }
 
     public Streamex<T> limit(long maxSize) {
-        internal = stream().limit(maxSize);
-        return this;
+        return setStream(internal.limit(maxSize));
     }
 
     public Streamex<T> skip(long n) {
-        internal = stream().skip(n);
-        return this;
+        return setStream(internal.skip(n));
     }
 
     public void forEach(Consumerex<T> action) {
-        stream().forEach(wrap(action));
+        internal.forEach(wrap(action));
     }
 
     public void forEachOrdered(Consumerex<T> action) {
-        stream().forEachOrdered(wrap(action));
+        internal.forEachOrdered(wrap(action));
     }
 
     public Object[] toArray() {
-        return stream().toArray();
+        return internal.toArray();
     }
 
     public <A> A[] toArray(IntFunctionex<A[]> generator) {
         final IntFunction<A[]> wrappedGenerator = wrapArray(generator);
-        return stream().toArray(wrappedGenerator);
+        return internal.toArray(wrappedGenerator);
     }
 
     public T reduce(T identity, BinaryOperatorex<T> accumulator) {
-        return stream().reduce(identity, wrap(accumulator));
+        return internal.reduce(identity, wrap(accumulator));
     }
 
     public Optionalex<T> reduce(BinaryOperatorex<T> accumulator) {
-        return Optionalex.ofOptional(stream().reduce(wrap(accumulator)));
+        return Optionalex.ofOptional(internal.reduce(wrap(accumulator)));
     }
 
     public <U> U reduce(U identity, BiFunctionex<U, T, U> accumulator, BinaryOperatorex<U> combiner) {
-        return stream().reduce(identity, wrap(accumulator), wrap(combiner));
+        return internal.reduce(identity, wrap(accumulator), wrap(combiner));
     }
 
     public <R> R collect(Supplierex<R> supplier, BiConsumerex<R, T> accumulator, BiConsumerex<R, R> combiner) {
-        return stream().collect(wrap(supplier), wrap(accumulator), wrap(combiner));
+        return internal.collect(wrap(supplier), wrap(accumulator), wrap(combiner));
     }
 
     <R, A> R collect(Collector<? super T, A, R> collector) {
-        return stream().collect(collector);
+        return internal.collect(collector);
     }
 
     public Optionalex<T> min(Comparator<T> comparator) {
-        return Optionalex.ofOptional(stream().min(comparator));
+        return Optionalex.ofOptional(internal.min(comparator));
     }
 
     public Optionalex<T> max(Comparator<T> comparator) {
-        return Optionalex.ofOptional(stream().max(comparator));
+        return Optionalex.ofOptional(internal.max(comparator));
     }
 
     public long count() {
-        return stream().count();
+        return internal.count();
     }
 
     public boolean anyMatch(Predicatex<T> predicate) {
-        return stream().anyMatch(wrap(predicate));
+        return internal.anyMatch(wrap(predicate));
     }
 
     public boolean allMatch(Predicatex<T> predicate) {
-        return stream().allMatch(wrap(predicate));
+        return internal.allMatch(wrap(predicate));
     }
 
     public boolean noneMatch(Predicatex<T> predicate) {
-        return stream().noneMatch(wrap(predicate));
+        return internal.noneMatch(wrap(predicate));
     }
 
     public Optionalex<T> findFirst() {
-        return Optionalex.ofOptional(stream().findFirst());
+        return Optionalex.ofOptional(internal.findFirst());
     }
 
     public Optionalex<T> findAny() {
-        return Optionalex.ofOptional(stream().findAny());
-    }
-
-    /*public static <T1> Builder<T1> builder() { //TODO
-        return Stream.builder();
-    }*/
+        return Optionalex.ofOptional(internal.findAny());
+    }    /*public static <T1> Builder<T1> builder() { //TODO        return Stream.builder();    }*/
 
     public static <T1> Streamex<T1> empty() {
         return ofStream(Stream.empty());
@@ -223,40 +210,34 @@ public class Streamex<T> {
     }
 
     public Iterator<T> iterator() {
-        return stream().iterator();
+        return internal.iterator();
     }
 
     public Spliterator<T> spliterator() {
-        return stream().spliterator();
+        return internal.spliterator();
     }
 
     public boolean isParallel() {
-        return stream().isParallel();
+        return internal.isParallel();
     }
 
     public Streamex<T> sequential() {
-        setStream(stream().sequential());
-        return this;
+        return setStream(internal.sequential());
     }
 
     public Streamex<T> parallel() {
-        setStream(stream().parallel());
-        return this;
+        return setStream(internal.parallel());
     }
 
     public Streamex<T> unordered() {
-        setStream(stream().unordered());
-        return this;
+        return setStream(internal.unordered());
     }
 
     public Streamex<T> onClose(Runnable closeHandler) {
-        setStream(stream().onClose(closeHandler));
-        return this;
+        return setStream(internal.onClose(closeHandler));
     }
 
     public void close() {
-        stream().close();
+        internal.close();
     }
-
-
 }
