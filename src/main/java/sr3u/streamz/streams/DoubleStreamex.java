@@ -12,205 +12,114 @@ import sr3u.streamz.functionals.primitive.doublefloat.DoubleSupplierex;
 import sr3u.streamz.functionals.primitive.doublefloat.DoubleUnaryOperatorex;
 import sr3u.streamz.functionals.primitive.doublefloat.ObjDoubleConsumerex;
 import sr3u.streamz.optionals.OptionalDoublex;
+import sr3u.streamz.streams.impl.StreamexSupport;
 
 import java.util.DoubleSummaryStatistics;
 import java.util.PrimitiveIterator;
 import java.util.Spliterator;
 import java.util.stream.DoubleStream;
-import java.util.stream.Stream;
 
-import static sr3u.streamz.common.ExceptionWrapper.wrap;
-import static sr3u.streamz.common.primitive.DoubleExceptionWrapper.wrap;
+public interface DoubleStreamex {
 
-public class DoubleStreamex {
-    protected DoubleStream internal;
-
-    private DoubleStreamex(DoubleStream doubleStream) {
-        internal = doubleStream;
+    static DoubleStreamex empty() {
+        return of();
     }
 
-    public DoubleStream stream() {
-        return internal;
+    static DoubleStreamex of(double t) {
+        return of(new double[]{t});
     }
 
-    private DoubleStreamex setStream(DoubleStream stream) {
-        internal = stream;
-        return this;
+    static DoubleStreamex of(double... values) {
+        return StreamexSupport.ofDouble(values);
     }
 
-    public static DoubleStreamex ofStream(DoubleStream doubleStream) {
-        return new DoubleStreamex(doubleStream);
+    static DoubleStreamex iterate(double seed, DoubleUnaryOperatorex f) {
+        return StreamexSupport.iterateDouble(seed, f);
     }
 
-    public DoubleStreamex filter(DoublePredicatex predicate) {
-        return setStream(internal.filter(wrap(predicate)));
+    static DoubleStreamex generate(DoubleSupplierex s) {
+        return StreamexSupport.generateDouble(s);
     }
 
-    public DoubleStreamex map(DoubleUnaryOperatorex mapper) {
-        return setStream(internal.map(wrap(mapper)));
+    static DoubleStreamex concat(DoubleStreamex a, DoubleStreamex b) {
+        return StreamexSupport.concatDouble(a, b);
     }
 
-    public <U> Streamex<? extends U> mapToObj(DoubleFunctionex<? extends U> mapper) {
-        return Streamex.ofStream(internal.mapToObj(wrap(mapper)));
+    DoubleStream stream();
+
+    DoubleStreamex filter(DoublePredicatex predicate);
+
+    DoubleStreamex map(DoubleUnaryOperatorex mapper);
+
+    <U> Streamex<U> mapToObj(DoubleFunctionex<U> mapper);
+
+    IntStreamex mapToInt(DoubleToIntFunctionex mapper);
+
+    LongStreamex mapToLong(DoubleToLongFunctionex mapper);
+
+    DoubleStreamex flatMap(DoubleFunctionex<? extends DoubleStream> mapper);
+
+    DoubleStreamex distinct();
+
+    DoubleStreamex sorted();
+
+    DoubleStreamex peek(DoubleConsumerex action);
+
+    DoubleStreamex limit(long maxSize);
+
+    DoubleStreamex skip(long n);
+
+    void forEach(DoubleConsumerex action);
+
+    void forEachOrdered(DoubleConsumerex action);
+
+    double[] toArray();
+
+    double reduce(double identity, DoubleBinaryOperatorex op);
+
+    OptionalDoublex reduce(DoubleBinaryOperatorex op);
+
+    <R> R collect(Supplierex<R> supplier, ObjDoubleConsumerex<R> accumulator, BiConsumerex<R, R> combiner);
+
+    double sum();
+
+    OptionalDoublex min();
+
+    OptionalDoublex max();
+
+    long count();
+
+    OptionalDoublex average();
+
+    DoubleSummaryStatistics summaryStatistics();
+
+    boolean anyMatch(DoublePredicatex predicate);
+
+    boolean allMatch(DoublePredicatex predicate);
+
+    boolean noneMatch(DoublePredicatex predicate);
+
+    OptionalDoublex findFirst();
+
+    OptionalDoublex findAny();
+
+    default Streamex<Double> boxed() {
+        return mapToObj(Double::valueOf);
     }
 
-    public IntStreamex mapToInt(DoubleToIntFunctionex mapper) {
-        return IntStreamex.ofStream(internal.mapToInt(wrap(mapper)));
-    }
+    DoubleStreamex sequential();
 
-    public LongStreamex mapToLong(DoubleToLongFunctionex mapper) {
-        return LongStreamex.ofStream(internal.mapToLong(wrap(mapper)));
-    }
+    DoubleStreamex parallel();
 
-    public DoubleStreamex flatMap(DoubleFunctionex<? extends DoubleStream> mapper) {
-        return setStream(internal.flatMap(wrap(mapper)));
-    }
+    PrimitiveIterator.OfDouble iterator();
 
-    public DoubleStreamex distinct() {
-        return setStream(internal.distinct());
-    }
+    Spliterator.OfDouble spliterator()    /*public static Builder builder() {//TODO        return DoubleStream.builder();    }*/;
 
-    public DoubleStreamex sorted() {
-        return setStream(internal.sorted());
-    }
+    boolean isParallel();
 
-    public DoubleStreamex peek(DoubleConsumerex action) {
-        return setStream(internal.peek(wrap(action)));
-    }
+    DoubleStreamex unordered();
 
-    public DoubleStreamex limit(long maxSize) {
-        return setStream(internal.limit(maxSize));
-    }
+    DoubleStreamex onClose(Runnable closeHandler);
 
-    public DoubleStreamex skip(long n) {
-        return setStream(internal.skip(n));
-    }
-
-    public void forEach(DoubleConsumerex action) {
-        internal.forEach(wrap(action));
-    }
-
-    public void forEachOrdered(DoubleConsumerex action) {
-        internal.forEachOrdered(wrap(action));
-    }
-
-    public double[] toArray() {
-        return internal.toArray();
-    }
-
-    public double reduce(double identity, DoubleBinaryOperatorex op) {
-        return internal.reduce(identity, wrap(op));
-    }
-
-    public OptionalDoublex reduce(DoubleBinaryOperatorex op) {
-        return OptionalDoublex.ofOptional(internal.reduce(wrap(op)));
-    }
-
-    public <R> R collect(Supplierex<R> supplier, ObjDoubleConsumerex<R> accumulator, BiConsumerex<R, R> combiner) {
-        return internal.collect(wrap(supplier), wrap(accumulator), wrap(combiner));
-    }
-
-    public double sum() {
-        return internal.sum();
-    }
-
-    public OptionalDoublex min() {
-        return OptionalDoublex.ofOptional(internal.min());
-    }
-
-    public OptionalDoublex max() {
-        return OptionalDoublex.ofOptional(internal.max());
-    }
-
-    public long count() {
-        return internal.count();
-    }
-
-    public OptionalDoublex average() {
-        return OptionalDoublex.ofOptional(internal.average());
-    }
-
-    public DoubleSummaryStatistics summaryStatistics() {
-        return internal.summaryStatistics();
-    }
-
-    public boolean anyMatch(DoublePredicatex predicate) {
-        return internal.anyMatch(wrap(predicate));
-    }
-
-    public boolean allMatch(DoublePredicatex predicate) {
-        return internal.allMatch(wrap(predicate));
-    }
-
-    public boolean noneMatch(DoublePredicatex predicate) {
-        return internal.noneMatch(wrap(predicate));
-    }
-
-    public OptionalDoublex findFirst() {
-        return OptionalDoublex.ofOptional(internal.findFirst());
-    }
-
-    public OptionalDoublex findAny() {
-        return OptionalDoublex.ofOptional(internal.findAny());
-    }
-
-    public Stream<Double> boxed() {
-        return internal.boxed();
-    }
-
-    public DoubleStreamex sequential() {
-        return setStream(internal.sequential());
-    }
-
-    public DoubleStreamex parallel() {
-        return setStream(internal.parallel());
-    }
-
-    public PrimitiveIterator.OfDouble iterator() {
-        return internal.iterator();
-    }
-
-    public Spliterator.OfDouble spliterator() {
-        return internal.spliterator();
-    }    /*public static Builder builder() {//TODO        return DoubleStream.builder();    }*/
-
-    public static DoubleStreamex empty() {
-        return ofStream(DoubleStream.empty());
-    }
-
-    public static DoubleStreamex of(double t) {
-        return ofStream(DoubleStream.of(t));
-    }
-
-    public static DoubleStreamex of(double... values) {
-        return ofStream(DoubleStream.of(values));
-    }
-
-    public static DoubleStreamex iterate(double seed, DoubleUnaryOperatorex f) {
-        return ofStream(DoubleStream.iterate(seed, wrap(f)));
-    }
-
-    public static DoubleStreamex generate(DoubleSupplierex s) {
-        return ofStream(DoubleStream.generate(wrap(s)));
-    }
-
-    public static DoubleStreamex concat(DoubleStreamex a, DoubleStreamex b) {
-        return ofStream(DoubleStream.concat(a.internal, b.internal));
-    }
-
-    public boolean isParallel() {
-        return internal.isParallel();
-    }
-
-    public DoubleStreamex unordered() {
-        return setStream(internal.unordered());
-    }
-
-    public DoubleStreamex onClose(Runnable closeHandler) {
-        return setStream(internal.onClose(closeHandler));
-    }
-
-    public void close() {
-        internal.close();
-    }
+    void close();
 }
