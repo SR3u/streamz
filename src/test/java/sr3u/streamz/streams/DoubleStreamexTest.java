@@ -49,6 +49,14 @@ public class DoubleStreamexTest {
     }
 
     @Test
+    public void filter() {
+        assertEquals(3, createStream()
+                .filter(i -> i == 3)
+                .findFirst()
+                .orElseThrow(RuntimeException::new), DELTA);
+    }
+
+    @Test
     public void minMax() {
         assertEquals(0, createStream().min().orElseThrow(RuntimeException::new), DELTA);
         assertEquals(5, createStream().max().orElseThrow(RuntimeException::new), DELTA);
