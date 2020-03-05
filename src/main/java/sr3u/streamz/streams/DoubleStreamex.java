@@ -83,7 +83,9 @@ public interface DoubleStreamex {
 
     double sum();
 
-    OptionalDoublex min();
+    default OptionalDoublex min() {
+        return sorted().findFirst();
+    }
 
     OptionalDoublex max();
 

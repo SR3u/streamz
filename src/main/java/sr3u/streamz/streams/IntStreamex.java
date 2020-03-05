@@ -92,7 +92,9 @@ public interface IntStreamex {
 
     int sum();
 
-    OptionalIntex min();
+    default OptionalIntex min() {
+        return sorted().findFirst();
+    }
 
     OptionalIntex max();
 

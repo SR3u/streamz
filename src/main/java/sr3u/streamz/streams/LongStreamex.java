@@ -92,7 +92,9 @@ public interface LongStreamex {
 
     long sum();
 
-    OptionalLongex min();
+    default OptionalLongex min() {
+        return sorted().findFirst();
+    }
 
     OptionalLongex max();
 
