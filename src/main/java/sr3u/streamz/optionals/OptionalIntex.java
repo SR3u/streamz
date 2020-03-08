@@ -42,6 +42,22 @@ public class OptionalIntex {
         return internal.getAsInt();
     }
 
+    public OptionalLongex asLong() {
+        if (internal.isPresent()) {
+            return OptionalLongex.of(internal.getAsInt());
+        } else {
+            return OptionalLongex.empty();
+        }
+    }
+
+    public OptionalDoublex asDouble() {
+        if (internal.isPresent()) {
+            return OptionalDoublex.of(internal.getAsInt());
+        } else {
+            return OptionalDoublex.empty();
+        }
+    }
+
     public boolean isPresent() {
         return internal.isPresent();
     }

@@ -80,7 +80,7 @@ public class Optionalex<T> {
         }
     }
 
-    public OptionalDoublex mapToLong(ToDoubleFunctionex<T> mapper) {
+    public OptionalDoublex mapToDouble(ToDoubleFunctionex<T> mapper) {
         if (isPresent()) {
             double i = wrap(mapper).applyAsDouble(get());
             return OptionalDoublex.of(i);

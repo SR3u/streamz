@@ -43,6 +43,14 @@ public class OptionalLongex {
         return internal.getAsLong();
     }
 
+    public OptionalDoublex asDouble() {
+        if (internal.isPresent()) {
+            return OptionalDoublex.of(internal.getAsLong());
+        } else {
+            return OptionalDoublex.empty();
+        }
+    }
+
     public boolean isPresent() {
         return internal.isPresent();
     }
