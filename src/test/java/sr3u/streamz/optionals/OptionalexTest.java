@@ -59,16 +59,19 @@ public class OptionalexTest {
     @Test
     public void mapToInt() {
         assertEquals(1, createOptional().mapToInt(Item::getAnInt).orElseThrow(RuntimeException::new));
+        assertFalse(Optionalex.empty().mapToInt(i -> 0).isPresent());
     }
 
     @Test
     public void mapToLong() {
         assertEquals(1L, createOptional().mapToLong(Item::getaLong).orElseThrow(RuntimeException::new));
+        assertFalse(Optionalex.empty().mapToLong(i -> 0L).isPresent());
     }
 
     @Test
     public void mapToDouble() {
         assertEquals(1.4, createOptional().mapToDouble(Item::getaDouble).orElseThrow(RuntimeException::new), DELTA);
+        assertFalse(Optionalex.empty().mapToDouble(i -> 0.0).isPresent());
     }
 
     @Test

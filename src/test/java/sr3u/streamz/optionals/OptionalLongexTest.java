@@ -20,6 +20,7 @@ public class OptionalLongexTest {
     @Test
     public void boxed() {
         assertEquals(10, OptionalLongex.of(10).boxed().orElseThrow(RuntimeException::new).intValue());
+        assertThrows(Exception.class, () -> OptionalLongex.empty().boxed().get());
     }
 
     @Test
@@ -31,6 +32,7 @@ public class OptionalLongexTest {
     @Test
     public void asDouble() {
         assertEquals(10.0, OptionalLongex.of(10).asDouble().orElseThrow(RuntimeException::new), DELTA);
+        assertThrows(Exception.class, () -> OptionalLongex.empty().asDouble().getAsDouble());
     }
 
     @Test

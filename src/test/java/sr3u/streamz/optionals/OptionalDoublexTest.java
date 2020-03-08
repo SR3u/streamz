@@ -20,6 +20,7 @@ public class OptionalDoublexTest {
     @Test
     public void boxed() {
         assertEquals(10, OptionalDoublex.of(10).boxed().orElseThrow(RuntimeException::new).intValue());
+        assertThrows(Exception.class, () -> OptionalDoublex.empty().boxed().get());
     }
 
     @Test
