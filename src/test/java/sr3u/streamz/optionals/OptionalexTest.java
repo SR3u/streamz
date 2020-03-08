@@ -26,6 +26,7 @@ public class OptionalexTest {
     @Test
     public void get() {
         assertEquals(1, createOptional().get().getAnInt());
+        assertThrows(Exception.class, () -> Optionalex.empty().get());
     }
 
     @Test
