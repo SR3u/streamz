@@ -87,8 +87,8 @@ public class OptionalexTest {
 
     @Test
     public void orElseGet() {
-        assertEquals(1, createOptional().orElse(new Item("0", 0, 0, 0)).getAnInt());
-        Item item = (Item) Optionalex.empty().orElse(new Item("0", 0, 0, 0));
+        assertEquals(1, createOptional().orElseGet(() -> new Item("0", 0, 0, 0)).getAnInt());
+        Item item = (Item) Optionalex.empty().orElseGet(() -> new Item("0", 0, 0, 0));
         assertEquals(0, item.getAnInt());
     }
 

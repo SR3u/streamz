@@ -57,6 +57,8 @@ public class OptionalLongexTest {
 
     @Test
     public void orElseGet() {
+        assertEquals(10, OptionalLongex.of(10).orElseGet(() -> 12));
+        assertEquals(12, OptionalLongex.empty().orElseGet(() -> 12));
     }
 
     @Test

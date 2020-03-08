@@ -63,6 +63,8 @@ public class OptionalIntexTest {
 
     @Test
     public void orElseGet() {
+        assertEquals(10, OptionalIntex.of(10).orElseGet(() -> 12));
+        assertEquals(12, OptionalIntex.empty().orElseGet(() -> 12));
     }
 
     @Test

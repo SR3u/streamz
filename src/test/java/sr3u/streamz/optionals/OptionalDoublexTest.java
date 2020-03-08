@@ -52,6 +52,8 @@ public class OptionalDoublexTest {
 
     @Test
     public void orElseGet() {
+        assertEquals(10, OptionalDoublex.of(10).orElseGet(() -> 12), DELTA);
+        assertEquals(12, OptionalDoublex.empty().orElseGet(() -> 12), DELTA);
     }
 
     @Test
