@@ -100,6 +100,26 @@ public class LongStreamexTest {
     }
 
     @Test
+    public void range() {
+        assertEquals(0, LongStreamex.range(0, 5).min().orElseThrow(RuntimeException::new));
+        assertEquals(4, LongStreamex.range(0, 5).max().orElseThrow(RuntimeException::new));
+        assertEquals(3, LongStreamex.range(0, 5).skip(3).limit(1).findFirst().orElseThrow(RuntimeException::new));
+    }
+
+    @Test
+    public void rangeClosed() {
+        assertEquals(0, LongStreamex.rangeClosed(0, 5).min().orElseThrow(RuntimeException::new));
+        assertEquals(5, LongStreamex.rangeClosed(0, 5).max().orElseThrow(RuntimeException::new));
+        assertEquals(3, LongStreamex.rangeClosed(0, 5).skip(3).limit(1).findFirst().orElseThrow(RuntimeException::new));
+    }
+
+    @Test
+    public void of() {
+        assertEquals(1, LongStreamex.of(4).count());
+        assertEquals(4, LongStreamex.of(4).findFirst().orElseThrow(RuntimeException::new));
+    }
+
+    @Test
     public void parallelAndSequential() {
         assertTrue(createStream().parallel().isParallel());
         assertFalse(createStream().sequential().isParallel());

@@ -92,6 +92,12 @@ public class DoubleStreamexTest {
     }
 
     @Test
+    public void of() {
+        assertEquals(1, DoubleStreamex.of(4).count());
+        assertEquals(4, DoubleStreamex.of(4).findFirst().orElseThrow(RuntimeException::new), DELTA);
+    }
+
+    @Test
     public void parallelAndSequential() {
         assertTrue(createStream().parallel().isParallel());
         assertFalse(createStream().sequential().isParallel());

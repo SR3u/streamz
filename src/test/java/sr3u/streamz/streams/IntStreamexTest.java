@@ -85,9 +85,15 @@ public class IntStreamexTest {
                 .asDoubleStream()
                 .mapToInt(i -> (int) i)
                 .asDoubleStream()
+                .boxed()
+                .mapToDouble(i -> i)
                 .mapToInt(i -> (int) i)
                 .asLongStream()
+                .boxed()
+                .mapToLong(i -> i)
                 .mapToInt(i -> (int) i)
+                .boxed()
+                .mapToInt(i -> i)
                 .skip(3)
                 .limit(1)
                 .findFirst().orElseThrow(RuntimeException::new));
@@ -108,6 +114,26 @@ public class IntStreamexTest {
     public void parallelAndSequential() {
         assertTrue(createStream().parallel().isParallel());
         assertFalse(createStream().sequential().isParallel());
+    }
+
+    @Test
+    public void range() {
+        assertEquals(0, IntStreamex.range(0, 5).min().orElseThrow(RuntimeException::new));
+        assertEquals(4, IntStreamex.range(0, 5).max().orElseThrow(RuntimeException::new));
+        assertEquals(3, IntStreamex.range(0, 5).skip(3).limit(1).findFirst().orElseThrow(RuntimeException::new));
+    }
+
+    @Test
+    public void rangeClosed() {
+        assertEquals(0, IntStreamex.rangeClosed(0, 5).min().orElseThrow(RuntimeException::new));
+        assertEquals(5, IntStreamex.rangeClosed(0, 5).max().orElseThrow(RuntimeException::new));
+        assertEquals(3, IntStreamex.rangeClosed(0, 5).skip(3).limit(1).findFirst().orElseThrow(RuntimeException::new));
+    }
+
+    @Test
+    public void of() {
+        assertEquals(1, IntStreamex.of(4).count());
+        assertEquals(4, IntStreamex.of(4).findFirst().orElseThrow(RuntimeException::new));
     }
 
     IntStreamex createStream(int... values) {
