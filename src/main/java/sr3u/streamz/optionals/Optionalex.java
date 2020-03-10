@@ -104,4 +104,8 @@ public class Optionalex<T> {
     public <X extends Throwable> T orElseThrow(Supplier<? extends X> exceptionSupplier) throws X {
         return internal.orElseThrow(exceptionSupplier);
     }
+
+    public T orElseThrow() {
+        return orElseThrow(RuntimeException::new);
+    }
 }

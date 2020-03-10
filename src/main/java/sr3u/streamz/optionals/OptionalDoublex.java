@@ -61,4 +61,8 @@ public class OptionalDoublex {
     public <X extends Throwable> double orElseThrow(Supplier<X> exceptionSupplier) throws X {
         return internal.orElseThrow(exceptionSupplier);
     }
+
+    public double orElseThrow() {
+        return orElseThrow(RuntimeException::new);
+    }
 }

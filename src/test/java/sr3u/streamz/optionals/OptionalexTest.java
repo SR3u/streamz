@@ -52,31 +52,31 @@ public class OptionalexTest {
 
     @Test
     public void map() {
-        Item item = createOptional().map(i -> i.setAnInt(100)).orElseThrow(RuntimeException::new);
+        Item item = createOptional().map(i -> i.setAnInt(100)).orElseThrow();
         assertEquals(100, item.getAnInt());
     }
 
     @Test
     public void mapToInt() {
-        assertEquals(1, createOptional().mapToInt(Item::getAnInt).orElseThrow(RuntimeException::new));
+        assertEquals(1, createOptional().mapToInt(Item::getAnInt).orElseThrow());
         assertFalse(Optionalex.empty().mapToInt(i -> 0).isPresent());
     }
 
     @Test
     public void mapToLong() {
-        assertEquals(1L, createOptional().mapToLong(Item::getaLong).orElseThrow(RuntimeException::new));
+        assertEquals(1L, createOptional().mapToLong(Item::getaLong).orElseThrow());
         assertFalse(Optionalex.empty().mapToLong(i -> 0L).isPresent());
     }
 
     @Test
     public void mapToDouble() {
-        assertEquals(1.4, createOptional().mapToDouble(Item::getaDouble).orElseThrow(RuntimeException::new), DELTA);
+        assertEquals(1.4, createOptional().mapToDouble(Item::getaDouble).orElseThrow(), DELTA);
         assertFalse(Optionalex.empty().mapToDouble(i -> 0.0).isPresent());
     }
 
     @Test
     public void flatMap() {
-        Item item = createOptional().flatMap(Optionalex::ofNullable).orElseThrow(RuntimeException::new);
+        Item item = createOptional().flatMap(Optionalex::ofNullable).orElseThrow();
         assertEquals(1, item.getAnInt());
         assertFalse(createOptional().flatMap(i -> Optionalex.empty()).isPresent());
     }

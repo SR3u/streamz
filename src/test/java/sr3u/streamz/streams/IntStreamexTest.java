@@ -2,6 +2,8 @@ package sr3u.streamz.streams;
 
 import org.junit.Test;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -24,7 +26,7 @@ public class IntStreamexTest {
 
     @Test
     public void sortedAndFindFirst() {
-        assertEquals(0, createStream().sorted().findFirst().orElseThrow(RuntimeException::new));
+        assertEquals(0, createStream().sorted().findFirst().orElseThrow());
     }
 
     @Test
@@ -43,7 +45,7 @@ public class IntStreamexTest {
                 .skip(2)
                 .limit(1)
                 .findAny()
-                .orElseThrow(RuntimeException::new));
+                .orElseThrow());
     }
 
     @Test
@@ -51,13 +53,13 @@ public class IntStreamexTest {
         assertEquals(3, createStream()
                 .filter(i -> i == 3)
                 .findFirst()
-                .orElseThrow(RuntimeException::new));
+                .orElseThrow());
     }
 
     @Test
     public void minMax() {
-        assertEquals(0, createStream().min().orElseThrow(RuntimeException::new));
-        assertEquals(5, createStream().max().orElseThrow(RuntimeException::new));
+        assertEquals(0, createStream().min().orElseThrow());
+        assertEquals(5, createStream().max().orElseThrow());
     }
 
     @Test
@@ -96,7 +98,7 @@ public class IntStreamexTest {
                 .mapToInt(i -> i)
                 .skip(3)
                 .limit(1)
-                .findFirst().orElseThrow(RuntimeException::new));
+                .findFirst().orElseThrow());
     }
 
     @Test
@@ -106,7 +108,7 @@ public class IntStreamexTest {
 
     @Test
     public void average() {
-        double average = createStream().average().orElseThrow(RuntimeException::new);
+        double average = createStream().average().orElseThrow();
         assertEquals(2.5, average, 1e-10);
     }
 
@@ -118,22 +120,43 @@ public class IntStreamexTest {
 
     @Test
     public void range() {
-        assertEquals(0, IntStreamex.range(0, 5).min().orElseThrow(RuntimeException::new));
-        assertEquals(4, IntStreamex.range(0, 5).max().orElseThrow(RuntimeException::new));
-        assertEquals(3, IntStreamex.range(0, 5).skip(3).limit(1).findFirst().orElseThrow(RuntimeException::new));
+        assertEquals(0, IntStreamex.range(0, 5).min().orElseThrow());
+        assertEquals(4, IntStreamex.range(0, 5).max().orElseThrow());
+        assertEquals(3, IntStreamex.range(0, 5).skip(3).limit(1).findFirst().orElseThrow());
     }
 
     @Test
     public void rangeClosed() {
-        assertEquals(0, IntStreamex.rangeClosed(0, 5).min().orElseThrow(RuntimeException::new));
-        assertEquals(5, IntStreamex.rangeClosed(0, 5).max().orElseThrow(RuntimeException::new));
-        assertEquals(3, IntStreamex.rangeClosed(0, 5).skip(3).limit(1).findFirst().orElseThrow(RuntimeException::new));
+        assertEquals(0, IntStreamex.rangeClosed(0, 5).min().orElseThrow());
+        assertEquals(5, IntStreamex.rangeClosed(0, 5).max().orElseThrow());
+        assertEquals(3, IntStreamex.rangeClosed(0, 5).skip(3).limit(1).findFirst().orElseThrow());
     }
 
     @Test
     public void of() {
         assertEquals(1, IntStreamex.of(4).count());
-        assertEquals(4, IntStreamex.of(4).findFirst().orElseThrow(RuntimeException::new));
+        assertEquals(4, IntStreamex.of(4).findFirst().orElseThrow());
+    }
+
+    @Test
+    public void iterate() {
+        int[] expected = {0, 1, 2, 3, 4};
+        int[] actual = IntStreamex.iterate(0, i -> i + 1).limit(5).toArray();
+        for (int i = 0; i < actual.length; i++) {
+            assertEquals(expected[i], actual[i]);
+        }
+    }
+
+    @Test
+    public void collect() {
+        IntStreamex intStream = IntStreamex.range(1, 10);
+        AtomicInteger atomicInteger = intStream.filter(i -> i % 2 == 0)
+                .parallel()
+                .collect(AtomicInteger::new,
+                        (a, b) -> a.set(a.get() + b),
+                        (a, b) -> a.set(a.get() + b.get())
+                );
+        assertEquals(20, atomicInteger.get());
     }
 
     IntStreamex createStream(int... values) {

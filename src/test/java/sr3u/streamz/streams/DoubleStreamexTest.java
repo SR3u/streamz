@@ -26,7 +26,7 @@ public class DoubleStreamexTest {
 
     @Test
     public void sortedAndFindFirst() {
-        assertEquals(0, createStream().sorted().findFirst().orElseThrow(RuntimeException::new), DELTA);
+        assertEquals(0, createStream().sorted().findFirst().orElseThrow(), DELTA);
     }
 
     @Test
@@ -45,7 +45,7 @@ public class DoubleStreamexTest {
                 .skip(2)
                 .limit(1)
                 .findAny()
-                .orElseThrow(RuntimeException::new), DELTA);
+                .orElseThrow(), DELTA);
     }
 
     @Test
@@ -53,13 +53,13 @@ public class DoubleStreamexTest {
         assertEquals(3, createStream()
                 .filter(i -> i == 3)
                 .findFirst()
-                .orElseThrow(RuntimeException::new), DELTA);
+                .orElseThrow(), DELTA);
     }
 
     @Test
     public void minMax() {
-        assertEquals(0, createStream().min().orElseThrow(RuntimeException::new), DELTA);
-        assertEquals(5, createStream().max().orElseThrow(RuntimeException::new), DELTA);
+        assertEquals(0, createStream().min().orElseThrow(), DELTA);
+        assertEquals(5, createStream().max().orElseThrow(), DELTA);
     }
 
     @Test
@@ -87,14 +87,14 @@ public class DoubleStreamexTest {
 
     @Test
     public void average() {
-        double average = createStream().average().orElseThrow(RuntimeException::new);
+        double average = createStream().average().orElseThrow();
         assertEquals(2.5, average, DELTA);
     }
 
     @Test
     public void of() {
         assertEquals(1, DoubleStreamex.of(4).count());
-        assertEquals(4, DoubleStreamex.of(4).findFirst().orElseThrow(RuntimeException::new), DELTA);
+        assertEquals(4, DoubleStreamex.of(4).findFirst().orElseThrow(), DELTA);
     }
 
     @Test
@@ -103,12 +103,62 @@ public class DoubleStreamexTest {
         assertFalse(createStream().sequential().isParallel());
     }
 
+    @Test
+    public void iterate() {
+        double[] expected = {0.4, 1.4, 2.4, 3.4, 4.4};
+        double[] actual = DoubleStreamex.iterate(0.4, i -> i + 1).limit(5).toArray();
+        for (int i = 0; i < actual.length; i++) {
+            assertEquals(expected[i], actual[i], DELTA);
+        }
+    }
+
+    @Test
+    public void collect() {
+        LongStreamex longStream = LongStreamex.range(1, 10);
+        double result = longStream.filter(i -> i % 2 == 0)
+                .mapToDouble(i -> (double) i)
+                .map(i -> i + 0.4)
+                .collect(DoubleWrapper::new,
+                        (a, b) -> a.set(a.get() + b),
+                        (a, b) -> a.set(a.get() + b.get())
+                ).get();
+        assertEquals(21.6, result, DELTA);
+    }
+
+    @Test
+    public void reduce() {
+        LongStreamex longStream = LongStreamex.range(1, 10);
+        double result = longStream.filter(i -> i % 2 == 0)
+                .mapToDouble(i -> (double) i)
+                .map(i -> i + 0.4)
+                .reduce(0, Double::sum);
+        assertEquals(21.6, result, DELTA);
+        longStream = LongStreamex.range(1, 10);
+        result = longStream.filter(i -> i % 2 == 0)
+                .mapToDouble(i -> (double) i)
+                .map(i -> i + 0.4)
+                .reduce(Double::sum).orElseThrow();
+        assertEquals(21.6, result, DELTA);
+    }
+
     DoubleStreamex createStream(double... values) {
         return DoubleStreamex.of(values);
     }
 
     DoubleStreamex createStream() {
         return createStream(1, 3, 2, 4, 5, 0);
+    }
+
+    private static class DoubleWrapper {
+        private double value = 0.0;
+
+        public double get() {
+            return value;
+        }
+
+        public void set(double value) {
+            this.value = value;
+        }
     }
 
 }

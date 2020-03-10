@@ -77,4 +77,8 @@ public class OptionalIntex {
     public <X extends Throwable> int orElseThrow(Supplierex<X> exceptionSupplier) throws X {
         return internal.orElseThrow(wrap(exceptionSupplier));
     }
+
+    public int orElseThrow() {
+        return orElseThrow(RuntimeException::new);
+    }
 }

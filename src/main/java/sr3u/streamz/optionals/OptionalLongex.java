@@ -70,4 +70,8 @@ public class OptionalLongex {
     public <X extends Throwable> long orElseThrow(Supplierex<X> exceptionSupplier) throws X {
         return internal.orElseThrow(wrap(exceptionSupplier));
     }
+
+    public long orElseThrow() {
+        return orElseThrow(RuntimeException::new);
+    }
 }

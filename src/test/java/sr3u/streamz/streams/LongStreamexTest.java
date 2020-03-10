@@ -2,6 +2,8 @@ package sr3u.streamz.streams;
 
 import org.junit.Test;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -24,7 +26,7 @@ public class LongStreamexTest {
 
     @Test
     public void sortedAndFindFirst() {
-        assertEquals(0, createStream().sorted().findFirst().orElseThrow(RuntimeException::new));
+        assertEquals(0, createStream().sorted().findFirst().orElseThrow());
     }
 
     @Test
@@ -43,7 +45,7 @@ public class LongStreamexTest {
                 .skip(2)
                 .limit(1)
                 .findAny()
-                .orElseThrow(RuntimeException::new));
+                .orElseThrow());
     }
 
     @Test
@@ -51,13 +53,13 @@ public class LongStreamexTest {
         assertEquals(3, createStream()
                 .filter(i -> i == 3)
                 .findFirst()
-                .orElseThrow(RuntimeException::new));
+                .orElseThrow());
     }
 
     @Test
     public void minMax() {
-        assertEquals(0, createStream().min().orElseThrow(RuntimeException::new));
-        assertEquals(5, createStream().max().orElseThrow(RuntimeException::new));
+        assertEquals(0, createStream().min().orElseThrow());
+        assertEquals(5, createStream().max().orElseThrow());
     }
 
     @Test
@@ -85,7 +87,7 @@ public class LongStreamexTest {
                 .mapToLong(i -> (long) i)
                 .skip(3)
                 .limit(1)
-                .findFirst().orElseThrow(RuntimeException::new));
+                .findFirst().orElseThrow());
     }
 
     @Test
@@ -95,34 +97,67 @@ public class LongStreamexTest {
 
     @Test
     public void average() {
-        double average = createStream().average().orElseThrow(RuntimeException::new);
+        double average = createStream().average().orElseThrow();
         assertEquals(2.5, average, 1e-10);
     }
 
     @Test
     public void range() {
-        assertEquals(0, LongStreamex.range(0, 5).min().orElseThrow(RuntimeException::new));
-        assertEquals(4, LongStreamex.range(0, 5).max().orElseThrow(RuntimeException::new));
-        assertEquals(3, LongStreamex.range(0, 5).skip(3).limit(1).findFirst().orElseThrow(RuntimeException::new));
+        assertEquals(0, LongStreamex.range(0, 5).min().orElseThrow());
+        assertEquals(4, LongStreamex.range(0, 5).max().orElseThrow());
+        assertEquals(3, LongStreamex.range(0, 5).skip(3).limit(1).findFirst().orElseThrow());
     }
 
     @Test
     public void rangeClosed() {
-        assertEquals(0, LongStreamex.rangeClosed(0, 5).min().orElseThrow(RuntimeException::new));
-        assertEquals(5, LongStreamex.rangeClosed(0, 5).max().orElseThrow(RuntimeException::new));
-        assertEquals(3, LongStreamex.rangeClosed(0, 5).skip(3).limit(1).findFirst().orElseThrow(RuntimeException::new));
+        assertEquals(0, LongStreamex.rangeClosed(0, 5).min().orElseThrow());
+        assertEquals(5, LongStreamex.rangeClosed(0, 5).max().orElseThrow());
+        assertEquals(3, LongStreamex.rangeClosed(0, 5).skip(3).limit(1).findFirst().orElseThrow());
     }
 
     @Test
     public void of() {
         assertEquals(1, LongStreamex.of(4).count());
-        assertEquals(4, LongStreamex.of(4).findFirst().orElseThrow(RuntimeException::new));
+        assertEquals(4, LongStreamex.of(4).findFirst().orElseThrow());
     }
 
     @Test
     public void parallelAndSequential() {
         assertTrue(createStream().parallel().isParallel());
         assertFalse(createStream().sequential().isParallel());
+    }
+
+    @Test
+    public void iterate() {
+        long[] expected = {0, 1, 2, 3, 4};
+        long[] actual = LongStreamex.iterate(0, i -> i + 1).limit(5).toArray();
+        for (int i = 0; i < actual.length; i++) {
+            assertEquals(expected[i], actual[i]);
+        }
+    }
+
+    @Test
+    public void collect() {
+        LongStreamex longStream = LongStreamex.range(1, 10);
+        AtomicLong atomicInteger = longStream.filter(i -> i % 2 == 0)
+                .parallel()
+                .collect(AtomicLong::new,
+                        (a, b) -> a.set(a.get() + b),
+                        (a, b) -> a.set(a.get() + b.get())
+                );
+        assertEquals(20, atomicInteger.get());
+    }
+
+    @Test
+    public void reduce() {
+        LongStreamex longStream = LongStreamex.range(1, 10);
+        long result = longStream.filter(i -> i % 2 == 0)
+                .reduce(0, Long::sum);
+        assertEquals(20, result);
+        longStream = LongStreamex.range(1, 10);
+        result = longStream.filter(i -> i % 2 == 0)
+                .reduce(Long::sum).orElseThrow();
+        assertEquals(20, result);
     }
 
     LongStreamex createStream(long... values) {

@@ -20,7 +20,7 @@ public class OptionalIntexTest {
 
     @Test
     public void boxed() {
-        assertEquals(10, OptionalIntex.of(10).boxed().orElseThrow(RuntimeException::new).intValue());
+        assertEquals(10, OptionalIntex.of(10).boxed().orElseThrow().intValue());
         assertThrows(Exception.class, () -> OptionalIntex.empty().boxed().get());
     }
 
@@ -32,13 +32,13 @@ public class OptionalIntexTest {
 
     @Test
     public void asLong() {
-        assertEquals(10L, OptionalIntex.of(10).asLong().orElseThrow(RuntimeException::new));
+        assertEquals(10L, OptionalIntex.of(10).asLong().orElseThrow());
         assertThrows(Exception.class, () -> OptionalIntex.empty().asLong().getAsLong());
     }
 
     @Test
     public void asDouble() {
-        assertEquals(10.0, OptionalIntex.of(10).asDouble().orElseThrow(RuntimeException::new), DELTA);
+        assertEquals(10.0, OptionalIntex.of(10).asDouble().orElseThrow(), DELTA);
         assertThrows(Exception.class, () -> OptionalIntex.empty().asDouble().getAsDouble());
     }
 

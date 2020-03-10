@@ -154,7 +154,7 @@ public class StreamexTest {
         Optionalex<Item> min = createStream()
                 .min(Comparator.comparing(Item::getAnInt));
         int integer = min.mapToInt(Item::getAnInt)
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow();
         assertEquals(0, integer);
     }
 
@@ -163,7 +163,7 @@ public class StreamexTest {
         Optionalex<Item> min = createStream()
                 .max(Comparator.comparing(Item::getAnInt));
         int integer = min.mapToInt(Item::getAnInt)
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow();
         assertEquals(4, integer);
     }
 
