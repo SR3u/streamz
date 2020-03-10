@@ -2,6 +2,9 @@ package sr3u.streamz.streams;
 
 import org.junit.Test;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -139,6 +142,23 @@ public class DoubleStreamexTest {
                 .map(i -> i + 0.4)
                 .reduce(Double::sum).orElseThrow();
         assertEquals(21.6, result, DELTA);
+    }
+
+    @Test
+    public void flatMap() {
+        List<Double> source = Streamex.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10).map(Double::new).collect(Collectors.toList());
+        double[] destination = DoubleStreamex.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+                .flatMap(list -> {
+                    double[] doubles = new double[10];
+                    for (int i = 0; i < doubles.length; i++) {
+                        doubles[i] = source.get(i);
+                    }
+                    return DoubleStreamex.of(doubles);
+                })
+                .toArray();
+        double expected = source.get(3);
+        double actual = destination[3];
+        assertEquals(expected, actual, DELTA);
     }
 
     DoubleStreamex createStream(double... values) {

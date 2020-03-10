@@ -24,6 +24,7 @@ import java.util.stream.IntStream;
 
 import static sr3u.streamz.common.ExceptionWrapper.wrap;
 import static sr3u.streamz.common.primitive.IntExceptionWrapper.wrap;
+import static sr3u.streamz.common.primitive.IntExceptionWrapper.wrapIntStream;
 
 public class WrappedIntStream implements IntStreamex {
 
@@ -69,8 +70,8 @@ public class WrappedIntStream implements IntStreamex {
     }
 
     @Override
-    public IntStreamex flatMap(IntFunctionex<? extends IntStream> mapper) {
-        return setStream(internal.flatMap(wrap(mapper)));
+    public IntStreamex flatMap(IntFunctionex<? extends IntStreamex> mapper) {
+        return setStream(internal.flatMap(wrapIntStream(mapper)));
     }
 
     @Override

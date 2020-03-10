@@ -2,7 +2,9 @@ package sr3u.streamz.streams;
 
 import org.junit.Test;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -157,6 +159,23 @@ public class IntStreamexTest {
                         (a, b) -> a.set(a.get() + b.get())
                 );
         assertEquals(20, atomicInteger.get());
+    }
+
+    @Test
+    public void flatMap() {
+        List<Integer> source = Streamex.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10).collect(Collectors.toList());
+        int[] destination = IntStreamex.range(1, 10)
+                .flatMap(list -> {
+                    int[] ints = new int[10];
+                    for (int i = 0; i < ints.length; i++) {
+                        ints[i] = source.get(i);
+                    }
+                    return IntStreamex.of(ints);
+                })
+                .toArray();
+        Integer expected = source.get(3);
+        Integer actual = destination[3];
+        assertEquals(expected, actual);
     }
 
     IntStreamex createStream(int... values) {

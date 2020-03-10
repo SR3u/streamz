@@ -1,5 +1,6 @@
 package sr3u.streamz.common.primitive;
 
+import sr3u.streamz.common.ExceptionCreator;
 import sr3u.streamz.functionals.primitive.DoubleToIntFunctionex;
 import sr3u.streamz.functionals.primitive.DoubleToLongFunctionex;
 import sr3u.streamz.functionals.primitive.doublefloat.DoubleBinaryOperatorex;
@@ -9,6 +10,7 @@ import sr3u.streamz.functionals.primitive.doublefloat.DoublePredicatex;
 import sr3u.streamz.functionals.primitive.doublefloat.DoubleSupplierex;
 import sr3u.streamz.functionals.primitive.doublefloat.DoubleUnaryOperatorex;
 import sr3u.streamz.functionals.primitive.doublefloat.ObjDoubleConsumerex;
+import sr3u.streamz.streams.DoubleStreamex;
 
 import java.util.function.DoubleBinaryOperator;
 import java.util.function.DoubleConsumer;
@@ -19,6 +21,7 @@ import java.util.function.DoubleToIntFunction;
 import java.util.function.DoubleToLongFunction;
 import java.util.function.DoubleUnaryOperator;
 import java.util.function.ObjDoubleConsumer;
+import java.util.stream.DoubleStream;
 
 import static sr3u.streamz.common.ExceptionCreator.createException;
 
@@ -109,6 +112,16 @@ public class DoubleExceptionWrapper {
                 consumer.accept(a, b);
             } catch (Exception e) {
                 throw createException(e);
+            }
+        };
+    }
+
+    public static DoubleFunction<? extends DoubleStream> wrapDoubleStream(DoubleFunctionex<? extends DoubleStreamex> mapper) {
+        return i -> {
+            try {
+                return mapper.apply(i).stream();
+            } catch (Exception e) {
+                throw ExceptionCreator.createException(e);
             }
         };
     }

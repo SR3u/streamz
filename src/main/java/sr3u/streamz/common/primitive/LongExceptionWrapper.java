@@ -1,5 +1,6 @@
 package sr3u.streamz.common.primitive;
 
+import sr3u.streamz.common.ExceptionCreator;
 import sr3u.streamz.functionals.primitive.LongToDoubleFunctionex;
 import sr3u.streamz.functionals.primitive.LongToIntFunctionex;
 import sr3u.streamz.functionals.primitive.longinteger.LongBinaryOperatorex;
@@ -9,6 +10,7 @@ import sr3u.streamz.functionals.primitive.longinteger.LongPredicatex;
 import sr3u.streamz.functionals.primitive.longinteger.LongSupplierex;
 import sr3u.streamz.functionals.primitive.longinteger.LongUnaryOperatorex;
 import sr3u.streamz.functionals.primitive.longinteger.ObjLongConsumerex;
+import sr3u.streamz.streams.LongStreamex;
 
 import java.util.function.LongBinaryOperator;
 import java.util.function.LongConsumer;
@@ -19,6 +21,7 @@ import java.util.function.LongToDoubleFunction;
 import java.util.function.LongToIntFunction;
 import java.util.function.LongUnaryOperator;
 import java.util.function.ObjLongConsumer;
+import java.util.stream.LongStream;
 
 import static sr3u.streamz.common.ExceptionCreator.createException;
 
@@ -109,6 +112,16 @@ public class LongExceptionWrapper {
                 consumer.accept(a, b);
             } catch (Exception e) {
                 throw createException(e);
+            }
+        };
+    }
+
+    public static LongFunction<? extends LongStream> wrapLongStream(LongFunctionex<? extends LongStreamex> mapper) {
+        return i -> {
+            try {
+                return mapper.apply(i).stream();
+            } catch (Exception e) {
+                throw ExceptionCreator.createException(e);
             }
         };
     }

@@ -2,7 +2,9 @@ package sr3u.streamz.streams;
 
 import org.junit.Test;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -158,6 +160,23 @@ public class LongStreamexTest {
         result = longStream.filter(i -> i % 2 == 0)
                 .reduce(Long::sum).orElseThrow();
         assertEquals(20, result);
+    }
+
+    @Test
+    public void flatMap() {
+        List<Long> source = Streamex.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10).map(Long::new).collect(Collectors.toList());
+        long[] destination = LongStreamex.range(1, 10)
+                .flatMap(list -> {
+                    long[] logs = new long[10];
+                    for (int i = 0; i < logs.length; i++) {
+                        logs[i] = source.get(i);
+                    }
+                    return LongStreamex.of(logs);
+                })
+                .toArray();
+        Long expected = source.get(3);
+        Long actual = destination[3];
+        assertEquals(expected, actual);
     }
 
     LongStreamex createStream(long... values) {

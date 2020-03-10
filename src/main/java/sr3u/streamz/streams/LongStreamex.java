@@ -66,7 +66,7 @@ public interface LongStreamex {
 
     DoubleStreamex mapToDouble(LongToDoubleFunctionex mapper);
 
-    LongStreamex flatMap(LongFunctionex<? extends LongStream> mapper);
+    LongStreamex flatMap(LongFunctionex<? extends LongStreamex> mapper);
 
     LongStreamex distinct();
 

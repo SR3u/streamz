@@ -23,6 +23,7 @@ import java.util.stream.DoubleStream;
 
 import static sr3u.streamz.common.ExceptionWrapper.wrap;
 import static sr3u.streamz.common.primitive.DoubleExceptionWrapper.wrap;
+import static sr3u.streamz.common.primitive.DoubleExceptionWrapper.wrapDoubleStream;
 
 public class WrappedDoubleStream implements DoubleStreamex {
     protected DoubleStream internal;
@@ -67,8 +68,8 @@ public class WrappedDoubleStream implements DoubleStreamex {
     }
 
     @Override
-    public DoubleStreamex flatMap(DoubleFunctionex<? extends DoubleStream> mapper) {
-        return setStream(internal.flatMap(wrap(mapper)));
+    public DoubleStreamex flatMap(DoubleFunctionex<? extends DoubleStreamex> mapper) {
+        return setStream(internal.flatMap(wrapDoubleStream(mapper)));
     }
 
     @Override

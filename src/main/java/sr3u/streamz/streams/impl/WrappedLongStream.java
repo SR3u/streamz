@@ -24,6 +24,7 @@ import java.util.stream.LongStream;
 
 import static sr3u.streamz.common.ExceptionWrapper.wrap;
 import static sr3u.streamz.common.primitive.LongExceptionWrapper.wrap;
+import static sr3u.streamz.common.primitive.LongExceptionWrapper.wrapLongStream;
 
 public class WrappedLongStream implements LongStreamex {
 
@@ -70,8 +71,8 @@ public class WrappedLongStream implements LongStreamex {
     }
 
     @Override
-    public LongStreamex flatMap(LongFunctionex<? extends LongStream> mapper) {
-        return setStream(internal.flatMap(wrap(mapper)));
+    public LongStreamex flatMap(LongFunctionex<? extends LongStreamex> mapper) {
+        return setStream(internal.flatMap(wrapLongStream(mapper)));
     }
 
     @Override

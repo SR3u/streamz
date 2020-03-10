@@ -66,7 +66,7 @@ public interface IntStreamex {
 
     DoubleStreamex mapToDouble(IntToDoubleFunctionex mapper);
 
-    IntStreamex flatMap(IntFunctionex<? extends IntStream> mapper);
+    IntStreamex flatMap(IntFunctionex<? extends IntStreamex> mapper);
 
     IntStreamex distinct();
 

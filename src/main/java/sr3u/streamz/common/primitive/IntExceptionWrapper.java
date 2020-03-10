@@ -1,5 +1,6 @@
 package sr3u.streamz.common.primitive;
 
+import sr3u.streamz.common.ExceptionCreator;
 import sr3u.streamz.functionals.primitive.IntToDoubleFunctionex;
 import sr3u.streamz.functionals.primitive.IntToLongFunctionex;
 import sr3u.streamz.functionals.primitive.integer.IntBinaryOperatorex;
@@ -9,6 +10,7 @@ import sr3u.streamz.functionals.primitive.integer.IntPredicatex;
 import sr3u.streamz.functionals.primitive.integer.IntSupplierex;
 import sr3u.streamz.functionals.primitive.integer.IntUnaryOperatorex;
 import sr3u.streamz.functionals.primitive.integer.ObjIntConsumerex;
+import sr3u.streamz.streams.IntStreamex;
 
 import java.util.function.IntBinaryOperator;
 import java.util.function.IntConsumer;
@@ -19,6 +21,7 @@ import java.util.function.IntToDoubleFunction;
 import java.util.function.IntToLongFunction;
 import java.util.function.IntUnaryOperator;
 import java.util.function.ObjIntConsumer;
+import java.util.stream.IntStream;
 
 import static sr3u.streamz.common.ExceptionCreator.createException;
 
@@ -109,6 +112,16 @@ public class IntExceptionWrapper {
                 consumer.accept(a, b);
             } catch (Exception e) {
                 throw createException(e);
+            }
+        };
+    }
+
+    public static IntFunction<? extends IntStream> wrapIntStream(IntFunctionex<? extends IntStreamex> mapper) {
+        return i -> {
+            try {
+                return mapper.apply(i).stream();
+            } catch (Exception e) {
+                throw ExceptionCreator.createException(e);
             }
         };
     }
