@@ -12,6 +12,7 @@ import sr3u.streamz.streams.DoubleStreamex;
 import sr3u.streamz.streams.IntStreamex;
 import sr3u.streamz.streams.LongStreamex;
 import sr3u.streamz.streams.Streamex;
+import sr3u.streamz.streams.StringStreamex;
 
 import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
@@ -120,6 +121,10 @@ public class StreamexSupport {
 
     public static DoubleStreamex doubleStreamOf(DoubleStream doubleStream) {
         return new WrappedDoubleStream(doubleStream);
+    }
+
+    public static StringStreamex stringStreamOf(Stream<String> stream) {
+        return new WrappedStringStream(stream);
     }
 
 }

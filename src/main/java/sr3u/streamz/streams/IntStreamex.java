@@ -66,6 +66,14 @@ public interface IntStreamex {
 
     DoubleStreamex mapToDouble(IntToDoubleFunctionex mapper);
 
+    default StringStreamex mapToString() {
+        return boxed().asStringStream();
+    }
+
+    default StringStreamex asStringStream() {
+        return mapToString();
+    }
+
     IntStreamex flatMap(IntFunctionex<? extends IntStreamex> mapper);
 
     IntStreamex distinct();

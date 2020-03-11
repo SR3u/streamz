@@ -63,6 +63,16 @@ public interface Streamex<T> {
 
     DoubleStreamex mapToDouble(ToDoubleFunctionex<T> mapper);
 
+    StringStreamex mapToString(Functionex<T, String> mapper);
+
+    default StringStreamex asStringStream() {
+        return mapToString();
+    }
+
+    default StringStreamex mapToString() {
+        return mapToString(Object::toString);
+    }
+
     <R> Streamex<R> flatMap(Functionex<T, ? extends Streamex<? extends R>> mapper);
 
     IntStreamex flatMapToInt(Functionex<T, ? extends IntStreamex> mapper);

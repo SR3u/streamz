@@ -57,6 +57,14 @@ public interface DoubleStreamex {
 
     LongStreamex mapToLong(DoubleToLongFunctionex mapper);
 
+    default StringStreamex mapToString() {
+        return boxed().asStringStream();
+    }
+
+    default StringStreamex asStringStream() {
+        return mapToString();
+    }
+
     DoubleStreamex flatMap(DoubleFunctionex<? extends DoubleStreamex> mapper);
 
     DoubleStreamex distinct();

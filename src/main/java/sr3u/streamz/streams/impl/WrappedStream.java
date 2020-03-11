@@ -17,6 +17,7 @@ import sr3u.streamz.streams.DoubleStreamex;
 import sr3u.streamz.streams.IntStreamex;
 import sr3u.streamz.streams.LongStreamex;
 import sr3u.streamz.streams.Streamex;
+import sr3u.streamz.streams.StringStreamex;
 
 import java.util.Comparator;
 import java.util.Iterator;
@@ -73,6 +74,11 @@ public class WrappedStream<T> implements Streamex<T> {
     @Override
     public DoubleStreamex mapToDouble(ToDoubleFunctionex<T> mapper) {
         return StreamexSupport.doubleStreamOf(internal.mapToDouble(wrap(mapper)));
+    }
+
+    @Override
+    public StringStreamex mapToString(Functionex<T, String> mapper) {
+        return StreamexSupport.stringStreamOf(internal.map(wrap(mapper)));
     }
 
     @Override
