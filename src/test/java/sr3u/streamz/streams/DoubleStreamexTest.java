@@ -3,6 +3,7 @@ package sr3u.streamz.streams;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
@@ -110,6 +111,16 @@ public class DoubleStreamexTest {
     public void iterate() {
         double[] expected = {0.4, 1.4, 2.4, 3.4, 4.4};
         double[] actual = DoubleStreamex.iterate(0.4, i -> i + 1).limit(5).toArray();
+        for (int i = 0; i < actual.length; i++) {
+            assertEquals(expected[i], actual[i], DELTA);
+        }
+    }
+
+    @Test
+    public void generate() {
+        double[] expected = {0, 1, 2, 3, 4};
+        AtomicInteger ai = new AtomicInteger();
+        double[] actual = DoubleStreamex.generate(() -> expected[ai.getAndIncrement()]).limit(5).toArray();
         for (int i = 0; i < actual.length; i++) {
             assertEquals(expected[i], actual[i], DELTA);
         }

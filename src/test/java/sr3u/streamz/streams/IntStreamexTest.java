@@ -150,6 +150,16 @@ public class IntStreamexTest {
     }
 
     @Test
+    public void generate() {
+        int[] expected = {0, 1, 2, 3, 4};
+        AtomicInteger ai = new AtomicInteger();
+        int[] actual = IntStreamex.generate(() -> expected[ai.getAndIncrement()]).limit(5).toArray();
+        for (int i = 0; i < actual.length; i++) {
+            assertEquals(expected[i], actual[i]);
+        }
+    }
+
+    @Test
     public void collect() {
         IntStreamex intStream = IntStreamex.range(1, 10);
         AtomicInteger atomicInteger = intStream.filter(i -> i % 2 == 0)

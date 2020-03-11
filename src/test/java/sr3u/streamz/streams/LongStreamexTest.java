@@ -3,6 +3,7 @@ package sr3u.streamz.streams;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
@@ -133,6 +134,16 @@ public class LongStreamexTest {
     public void iterate() {
         long[] expected = {0, 1, 2, 3, 4};
         long[] actual = LongStreamex.iterate(0, i -> i + 1).limit(5).toArray();
+        for (int i = 0; i < actual.length; i++) {
+            assertEquals(expected[i], actual[i]);
+        }
+    }
+
+    @Test
+    public void generate() {
+        long[] expected = {0, 1, 2, 3, 4};
+        AtomicInteger ai = new AtomicInteger();
+        long[] actual = LongStreamex.generate(() -> expected[ai.getAndIncrement()]).limit(5).toArray();
         for (int i = 0; i < actual.length; i++) {
             assertEquals(expected[i], actual[i]);
         }
