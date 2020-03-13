@@ -6,8 +6,6 @@ import sr3u.streamz.functionals.primitive.doublefloat.DoubleSupplierex;
 import java.util.OptionalDouble;
 import java.util.function.Supplier;
 
-import static sr3u.streamz.common.primitive.DoubleExceptionWrapper.wrap;
-
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public class OptionalDoublex {
 
@@ -47,7 +45,7 @@ public class OptionalDoublex {
     }
 
     public void ifPresent(DoubleConsumerex consumer) {
-        internal.ifPresent(wrap(consumer));
+        internal.ifPresent(consumer.wrap());
     }
 
     public double orElse(double other) {
@@ -55,7 +53,7 @@ public class OptionalDoublex {
     }
 
     public double orElseGet(DoubleSupplierex other) {
-        return internal.orElseGet(wrap(other));
+        return internal.orElseGet(other.wrap());
     }
 
     public <X extends Throwable> double orElseThrow(Supplier<X> exceptionSupplier) throws X {

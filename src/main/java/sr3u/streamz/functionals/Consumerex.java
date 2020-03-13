@@ -1,6 +1,9 @@
 package sr3u.streamz.functionals;
 
+import sr3u.streamz.common.ExceptionWrapper;
+
 import java.util.Objects;
+import java.util.function.Consumer;
 
 /**
  * Represents an operation that accepts a single input argument and returns no
@@ -41,5 +44,9 @@ public interface Consumerex<T> {
             accept(t);
             after.accept(t);
         };
+    }
+
+    default Consumer<T> wrap() {
+        return ExceptionWrapper.wrap(this);
     }
 }

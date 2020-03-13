@@ -1,5 +1,9 @@
 package sr3u.streamz.functionals;
 
+import sr3u.streamz.common.ExceptionWrapper;
+
+import java.util.function.UnaryOperator;
+
 /**
  * Represents an operation on a single operand that produces a result of the
  * same type as its operand.  This is a specialization of {@code Function} for
@@ -23,5 +27,10 @@ public interface UnaryOperatorex<T> extends Functionex<T, T> {
      */
     static <T> UnaryOperatorex<T> identity() {
         return t -> t;
+    }
+
+    @Override
+    default UnaryOperator<T> wrap() {
+        return ExceptionWrapper.wrap(this);
     }
 }

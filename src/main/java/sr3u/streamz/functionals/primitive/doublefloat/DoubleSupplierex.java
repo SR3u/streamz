@@ -1,7 +1,10 @@
 package sr3u.streamz.functionals.primitive.doublefloat;
 
 
+import sr3u.streamz.common.primitive.DoubleExceptionWrapper;
 import sr3u.streamz.functionals.Supplierex;
+
+import java.util.function.DoubleSupplier;
 
 /**
  * Represents a supplier of {@code double}-valued results.  This is the
@@ -26,4 +29,8 @@ public interface DoubleSupplierex {
      */
     @SuppressWarnings("RedundantThrows")
     double getAsDouble() throws Exception;
+
+    default DoubleSupplier wrap() {
+        return DoubleExceptionWrapper.wrap(this);
+    }
 }

@@ -6,9 +6,6 @@ import sr3u.streamz.functionals.primitive.longinteger.LongSupplierex;
 
 import java.util.OptionalLong;
 
-import static sr3u.streamz.common.ExceptionWrapper.wrap;
-import static sr3u.streamz.common.primitive.LongExceptionWrapper.wrap;
-
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public class OptionalLongex {
 
@@ -56,7 +53,7 @@ public class OptionalLongex {
     }
 
     public void ifPresent(LongConsumerex consumer) {
-        internal.ifPresent(wrap(consumer));
+        internal.ifPresent(consumer.wrap());
     }
 
     public long orElse(long other) {
@@ -64,11 +61,11 @@ public class OptionalLongex {
     }
 
     public long orElseGet(LongSupplierex other) {
-        return internal.orElseGet(wrap(other));
+        return internal.orElseGet(other.wrap());
     }
 
     public <X extends Throwable> long orElseThrow(Supplierex<X> exceptionSupplier) throws X {
-        return internal.orElseThrow(wrap(exceptionSupplier));
+        return internal.orElseThrow(exceptionSupplier.wrap());
     }
 
     public long orElseThrow() {

@@ -1,5 +1,9 @@
 package sr3u.streamz.functionals;
 
+import sr3u.streamz.common.ExceptionWrapper;
+
+import java.util.function.Supplier;
+
 /**
  * Represents a supplier of results.
  *
@@ -22,4 +26,8 @@ public interface Supplierex<T> {
      */
     @SuppressWarnings("RedundantThrows")
     T get() throws Exception;
+
+    default Supplier<T> wrap() {
+        return ExceptionWrapper.wrap(this);
+    }
 }

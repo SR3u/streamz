@@ -27,7 +27,6 @@ import java.util.function.Predicate;
 import java.util.stream.Collector;
 import java.util.stream.Stream;
 
-import static sr3u.streamz.common.ExceptionWrapper.wrap;
 import static sr3u.streamz.common.ExceptionWrapper.wrapArray;
 import static sr3u.streamz.common.ExceptionWrapper.wrapDoubleStream;
 import static sr3u.streamz.common.ExceptionWrapper.wrapIntStream;
@@ -53,32 +52,32 @@ public class WrappedStream<T> implements Streamex<T> {
 
     @Override
     public Streamex<T> filter(Predicatex<T> predicate) {
-        return setStream(internal.filter(wrap(predicate)));
+        return setStream(internal.filter(predicate.wrap()));
     }
 
     @Override
     public <R> Streamex<R> map(Functionex<T, ? extends R> mapper) {
-        return new WrappedStream<>(internal.map(wrap(mapper)));
+        return new WrappedStream<>(internal.map(mapper.wrap()));
     }
 
     @Override
     public IntStreamex mapToInt(ToIntFunctionex<T> mapper) {
-        return StreamexSupport.intStreamOf(internal.mapToInt(wrap(mapper)));
+        return StreamexSupport.intStreamOf(internal.mapToInt(mapper.wrap()));
     }
 
     @Override
     public LongStreamex mapToLong(ToLongFunctionex<T> mapper) {
-        return StreamexSupport.longStreamOf(internal.mapToLong(wrap(mapper)));
+        return StreamexSupport.longStreamOf(internal.mapToLong(mapper.wrap()));
     }
 
     @Override
     public DoubleStreamex mapToDouble(ToDoubleFunctionex<T> mapper) {
-        return StreamexSupport.doubleStreamOf(internal.mapToDouble(wrap(mapper)));
+        return StreamexSupport.doubleStreamOf(internal.mapToDouble(mapper.wrap()));
     }
 
     @Override
     public StringStreamex mapToString(Functionex<T, String> mapper) {
-        return StreamexSupport.stringStreamOf(internal.map(wrap(mapper)));
+        return StreamexSupport.stringStreamOf(internal.map(mapper.wrap()));
     }
 
     @Override
@@ -108,7 +107,7 @@ public class WrappedStream<T> implements Streamex<T> {
 
     @Override
     public <P> Streamex<T> distinct(Functionex<T, P> getter) {
-        Predicate<T> wrap = wrap(Utils.distinctByKey(getter));
+        Predicate<T> wrap = Utils.distinctByKey(getter).wrap();
         return setStream(internal.filter(wrap));
     }
 
@@ -124,7 +123,7 @@ public class WrappedStream<T> implements Streamex<T> {
 
     @Override
     public Streamex<T> peek(Consumerex<T> action) {
-        return setStream(internal.peek(wrap(action)));
+        return setStream(internal.peek(action.wrap()));
     }
 
     @Override
@@ -139,12 +138,12 @@ public class WrappedStream<T> implements Streamex<T> {
 
     @Override
     public void forEach(Consumerex<T> action) {
-        internal.forEach(wrap(action));
+        internal.forEach(action.wrap());
     }
 
     @Override
     public void forEachOrdered(Consumerex<T> action) {
-        internal.forEachOrdered(wrap(action));
+        internal.forEachOrdered(action.wrap());
     }
 
     @Override
@@ -160,22 +159,22 @@ public class WrappedStream<T> implements Streamex<T> {
 
     @Override
     public T reduce(T identity, BinaryOperatorex<T> accumulator) {
-        return internal.reduce(identity, wrap(accumulator));
+        return internal.reduce(identity, accumulator.wrap());
     }
 
     @Override
     public Optionalex<T> reduce(BinaryOperatorex<T> accumulator) {
-        return Optionalex.ofOptional(internal.reduce(wrap(accumulator)));
+        return Optionalex.ofOptional(internal.reduce(accumulator.wrap()));
     }
 
     @Override
     public <U> U reduce(U identity, BiFunctionex<U, T, U> accumulator, BinaryOperatorex<U> combiner) {
-        return internal.reduce(identity, wrap(accumulator), wrap(combiner));
+        return internal.reduce(identity, accumulator.wrap(), combiner.wrap());
     }
 
     @Override
     public <R> R collect(Supplierex<R> supplier, BiConsumerex<R, T> accumulator, BiConsumerex<R, R> combiner) {
-        return internal.collect(wrap(supplier), wrap(accumulator), wrap(combiner));
+        return internal.collect(supplier.wrap(), accumulator.wrap(), combiner.wrap());
     }
 
     @Override
@@ -200,17 +199,17 @@ public class WrappedStream<T> implements Streamex<T> {
 
     @Override
     public boolean anyMatch(Predicatex<T> predicate) {
-        return internal.anyMatch(wrap(predicate));
+        return internal.anyMatch(predicate.wrap());
     }
 
     @Override
     public boolean allMatch(Predicatex<T> predicate) {
-        return internal.allMatch(wrap(predicate));
+        return internal.allMatch(predicate.wrap());
     }
 
     @Override
     public boolean noneMatch(Predicatex<T> predicate) {
-        return internal.noneMatch(wrap(predicate));
+        return internal.noneMatch(predicate.wrap());
     }
 
     @Override

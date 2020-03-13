@@ -1,8 +1,10 @@
 package sr3u.streamz.functionals.primitive.integer;
 
+import sr3u.streamz.common.primitive.IntExceptionWrapper;
 import sr3u.streamz.functionals.Predicatex;
 
 import java.util.Objects;
+import java.util.function.IntPredicate;
 
 /**
  * Represents a predicate (boolean-valued function) of one {@code int}-valued
@@ -78,5 +80,9 @@ public interface IntPredicatex {
     default IntPredicatex or(IntPredicatex other) {
         Objects.requireNonNull(other);
         return (value) -> test(value) || other.test(value);
+    }
+
+    default IntPredicate wrap() {
+        return IntExceptionWrapper.wrap(this);
     }
 }

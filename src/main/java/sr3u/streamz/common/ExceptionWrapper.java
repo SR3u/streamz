@@ -80,7 +80,7 @@ public class ExceptionWrapper {
         };
     }
 
-    public static <T, U> BiFunction<U, T, U> wrap(BiFunctionex<U, T, U> f) {
+    public static <T, U, R> BiFunction<U, T, R> wrapBiFunction(BiFunctionex<U, T, R> f) {
         return (a, b) -> {
             try {
                 return f.apply(a, b);

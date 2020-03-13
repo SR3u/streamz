@@ -21,8 +21,6 @@ import java.util.PrimitiveIterator;
 import java.util.Spliterator;
 import java.util.stream.DoubleStream;
 
-import static sr3u.streamz.common.ExceptionWrapper.wrap;
-import static sr3u.streamz.common.primitive.DoubleExceptionWrapper.wrap;
 import static sr3u.streamz.common.primitive.DoubleExceptionWrapper.wrapDoubleStream;
 
 public class WrappedDoubleStream implements DoubleStreamex {
@@ -44,27 +42,27 @@ public class WrappedDoubleStream implements DoubleStreamex {
 
     @Override
     public DoubleStreamex filter(DoublePredicatex predicate) {
-        return setStream(internal.filter(wrap(predicate)));
+        return setStream(internal.filter(predicate.wrap()));
     }
 
     @Override
     public DoubleStreamex map(DoubleUnaryOperatorex mapper) {
-        return setStream(internal.map(wrap(mapper)));
+        return setStream(internal.map(mapper.wrap()));
     }
 
     @Override
     public <U> Streamex<U> mapToObj(DoubleFunctionex<U> mapper) {
-        return Streamex.ofStream(internal.mapToObj(wrap(mapper)));
+        return Streamex.ofStream(internal.mapToObj(mapper.wrap()));
     }
 
     @Override
     public IntStreamex mapToInt(DoubleToIntFunctionex mapper) {
-        return StreamexSupport.intStreamOf(internal.mapToInt(wrap(mapper)));
+        return StreamexSupport.intStreamOf(internal.mapToInt(mapper.wrap()));
     }
 
     @Override
     public LongStreamex mapToLong(DoubleToLongFunctionex mapper) {
-        return StreamexSupport.longStreamOf(internal.mapToLong(wrap(mapper)));
+        return StreamexSupport.longStreamOf(internal.mapToLong(mapper.wrap()));
     }
 
     @Override
@@ -84,7 +82,7 @@ public class WrappedDoubleStream implements DoubleStreamex {
 
     @Override
     public DoubleStreamex peek(DoubleConsumerex action) {
-        return setStream(internal.peek(wrap(action)));
+        return setStream(internal.peek(action.wrap()));
     }
 
     @Override
@@ -99,12 +97,12 @@ public class WrappedDoubleStream implements DoubleStreamex {
 
     @Override
     public void forEach(DoubleConsumerex action) {
-        internal.forEach(wrap(action));
+        internal.forEach(action.wrap());
     }
 
     @Override
     public void forEachOrdered(DoubleConsumerex action) {
-        internal.forEachOrdered(wrap(action));
+        internal.forEachOrdered(action.wrap());
     }
 
     @Override
@@ -114,17 +112,17 @@ public class WrappedDoubleStream implements DoubleStreamex {
 
     @Override
     public double reduce(double identity, DoubleBinaryOperatorex op) {
-        return internal.reduce(identity, wrap(op));
+        return internal.reduce(identity, op.wrap());
     }
 
     @Override
     public OptionalDoublex reduce(DoubleBinaryOperatorex op) {
-        return OptionalDoublex.ofOptional(internal.reduce(wrap(op)));
+        return OptionalDoublex.ofOptional(internal.reduce(op.wrap()));
     }
 
     @Override
     public <R> R collect(Supplierex<R> supplier, ObjDoubleConsumerex<R> accumulator, BiConsumerex<R, R> combiner) {
-        return internal.collect(wrap(supplier), wrap(accumulator), wrap(combiner));
+        return internal.collect(supplier.wrap(), accumulator.wrap(), combiner.wrap());
     }
 
     @Override
@@ -159,17 +157,17 @@ public class WrappedDoubleStream implements DoubleStreamex {
 
     @Override
     public boolean anyMatch(DoublePredicatex predicate) {
-        return internal.anyMatch(wrap(predicate));
+        return internal.anyMatch(predicate.wrap());
     }
 
     @Override
     public boolean allMatch(DoublePredicatex predicate) {
-        return internal.allMatch(wrap(predicate));
+        return internal.allMatch(predicate.wrap());
     }
 
     @Override
     public boolean noneMatch(DoublePredicatex predicate) {
-        return internal.noneMatch(wrap(predicate));
+        return internal.noneMatch(predicate.wrap());
     }
 
     @Override

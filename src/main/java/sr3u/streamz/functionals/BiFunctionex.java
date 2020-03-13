@@ -1,6 +1,9 @@
 package sr3u.streamz.functionals;
 
+import sr3u.streamz.common.ExceptionWrapper;
+
 import java.util.Objects;
+import java.util.function.BiFunction;
 
 
 /**
@@ -44,5 +47,9 @@ public interface BiFunctionex<T, U, R> {
     default <V> BiFunctionex<T, U, V> andThen(Functionex<? super R, ? extends V> after) {
         Objects.requireNonNull(after);
         return (T t, U u) -> after.apply(apply(t, u));
+    }
+
+    default BiFunction<T, U, R> wrap() {
+        return ExceptionWrapper.wrapBiFunction(this);
     }
 }

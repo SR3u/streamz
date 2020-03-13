@@ -1,6 +1,9 @@
 package sr3u.streamz.functionals;
 
+import sr3u.streamz.common.ExceptionWrapper;
+
 import java.util.Objects;
+import java.util.function.BiConsumer;
 
 /**
  * Represents an operation that accepts two input arguments and returns no
@@ -45,5 +48,9 @@ public interface BiConsumerex<T, U> {
             accept(l, r);
             after.accept(l, r);
         };
+    }
+
+    default BiConsumer<T, U> wrap() {
+        return ExceptionWrapper.wrap(this);
     }
 }

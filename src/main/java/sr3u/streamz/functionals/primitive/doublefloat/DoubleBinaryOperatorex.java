@@ -1,6 +1,9 @@
 package sr3u.streamz.functionals.primitive.doublefloat;
 
+import sr3u.streamz.common.primitive.DoubleExceptionWrapper;
 import sr3u.streamz.functionals.BinaryOperatorex;
+
+import java.util.function.DoubleBinaryOperator;
 
 /**
  * Represents an operation upon two {@code double}-valued operands and producing an
@@ -26,4 +29,8 @@ public interface DoubleBinaryOperatorex {
      */
     @SuppressWarnings("RedundantThrows")
     double applyAsDouble(double left, double right) throws Exception;
+
+    default DoubleBinaryOperator wrap() {
+        return DoubleExceptionWrapper.wrap(this);
+    }
 }

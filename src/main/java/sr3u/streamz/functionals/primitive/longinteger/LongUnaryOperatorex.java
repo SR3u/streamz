@@ -1,8 +1,10 @@
 package sr3u.streamz.functionals.primitive.longinteger;
 
+import sr3u.streamz.common.primitive.LongExceptionWrapper;
 import sr3u.streamz.functionals.UnaryOperatorex;
 
 import java.util.Objects;
+import java.util.function.LongUnaryOperator;
 
 /**
  * Represents an operation on a single {@code long}-valued operand that produces
@@ -67,5 +69,9 @@ public interface LongUnaryOperatorex {
      */
     static LongUnaryOperatorex identity() {
         return t -> t;
+    }
+
+    default LongUnaryOperator wrap() {
+        return LongExceptionWrapper.wrap(this);
     }
 }

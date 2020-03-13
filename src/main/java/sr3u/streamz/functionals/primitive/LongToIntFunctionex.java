@@ -1,7 +1,10 @@
 package sr3u.streamz.functionals.primitive;
 
 
+import sr3u.streamz.common.primitive.LongExceptionWrapper;
 import sr3u.streamz.functionals.Functionex;
+
+import java.util.function.LongToIntFunction;
 
 /**
  * Represents a function that accepts a long-valued argument and produces an
@@ -25,4 +28,8 @@ public interface LongToIntFunctionex {
      */
     @SuppressWarnings("RedundantThrows")
     int applyAsInt(long value) throws Exception;
+
+    default LongToIntFunction wrap() {
+        return LongExceptionWrapper.wrap(this);
+    }
 }

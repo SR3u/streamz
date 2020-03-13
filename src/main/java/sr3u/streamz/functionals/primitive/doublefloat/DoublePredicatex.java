@@ -1,8 +1,10 @@
 package sr3u.streamz.functionals.primitive.doublefloat;
 
+import sr3u.streamz.common.primitive.DoubleExceptionWrapper;
 import sr3u.streamz.functionals.Predicatex;
 
 import java.util.Objects;
+import java.util.function.DoublePredicate;
 
 /**
  * Represents a predicate (boolean-valued function) of one {@code double}-valued
@@ -78,5 +80,9 @@ public interface DoublePredicatex {
     default DoublePredicatex or(DoublePredicatex other) {
         Objects.requireNonNull(other);
         return (value) -> test(value) || other.test(value);
+    }
+
+    default DoublePredicate wrap() {
+        return DoubleExceptionWrapper.wrap(this);
     }
 }

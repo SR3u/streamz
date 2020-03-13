@@ -1,8 +1,10 @@
 package sr3u.streamz.functionals.primitive.longinteger;
 
+import sr3u.streamz.common.primitive.LongExceptionWrapper;
 import sr3u.streamz.functionals.Predicatex;
 
 import java.util.Objects;
+import java.util.function.LongPredicate;
 
 /**
  * Represents a predicate (boolean-valued function) of one {@code long}-valued
@@ -78,5 +80,9 @@ public interface LongPredicatex {
     default LongPredicatex or(LongPredicatex other) {
         Objects.requireNonNull(other);
         return (value) -> test(value) || other.test(value);
+    }
+
+    default LongPredicate wrap() {
+        return LongExceptionWrapper.wrap(this);
     }
 }

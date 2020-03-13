@@ -1,8 +1,10 @@
 package sr3u.streamz.functionals.primitive.doublefloat;
 
+import sr3u.streamz.common.primitive.DoubleExceptionWrapper;
 import sr3u.streamz.functionals.Consumerex;
 
 import java.util.Objects;
+import java.util.function.DoubleConsumer;
 
 /**
  * Represents an operation that accepts a single {@code double}-valued argument and
@@ -44,5 +46,9 @@ public interface DoubleConsumerex {
             accept(t);
             after.accept(t);
         };
+    }
+
+    default DoubleConsumer wrap() {
+        return DoubleExceptionWrapper.wrap(this);
     }
 }

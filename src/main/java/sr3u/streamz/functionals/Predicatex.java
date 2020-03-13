@@ -1,6 +1,9 @@
 package sr3u.streamz.functionals;
 
+import sr3u.streamz.common.ExceptionWrapper;
+
 import java.util.Objects;
+import java.util.function.Predicate;
 
 /**
  * Represents a predicate (boolean-valued function) of one argument.
@@ -90,5 +93,9 @@ public interface Predicatex<T> {
         return (null == targetRef)
                 ? Objects::isNull
                 : targetRef::equals;
+    }
+
+    default Predicate<T> wrap() {
+        return ExceptionWrapper.wrap(this);
     }
 }

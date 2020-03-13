@@ -22,8 +22,6 @@ import java.util.PrimitiveIterator;
 import java.util.Spliterator;
 import java.util.stream.IntStream;
 
-import static sr3u.streamz.common.ExceptionWrapper.wrap;
-import static sr3u.streamz.common.primitive.IntExceptionWrapper.wrap;
 import static sr3u.streamz.common.primitive.IntExceptionWrapper.wrapIntStream;
 
 public class WrappedIntStream implements IntStreamex {
@@ -46,27 +44,27 @@ public class WrappedIntStream implements IntStreamex {
 
     @Override
     public IntStreamex filter(IntPredicatex predicate) {
-        return setStream(internal.filter(wrap(predicate)));
+        return setStream(internal.filter(predicate.wrap()));
     }
 
     @Override
     public IntStreamex map(IntUnaryOperatorex mapper) {
-        return setStream(internal.map(wrap(mapper)));
+        return setStream(internal.map(mapper.wrap()));
     }
 
     @Override
     public <U> Streamex<U> mapToObj(IntFunctionex<U> mapper) {
-        return Streamex.ofStream(internal.mapToObj(wrap(mapper)));
+        return Streamex.ofStream(internal.mapToObj(mapper.wrap()));
     }
 
     @Override
     public LongStreamex mapToLong(IntToLongFunctionex mapper) {
-        return StreamexSupport.longStreamOf(internal.mapToLong(wrap(mapper)));
+        return StreamexSupport.longStreamOf(internal.mapToLong(mapper.wrap()));
     }
 
     @Override
     public DoubleStreamex mapToDouble(IntToDoubleFunctionex mapper) {
-        return StreamexSupport.doubleStreamOf(internal.mapToDouble(wrap(mapper)));
+        return StreamexSupport.doubleStreamOf(internal.mapToDouble(mapper.wrap()));
     }
 
     @Override
@@ -86,7 +84,7 @@ public class WrappedIntStream implements IntStreamex {
 
     @Override
     public IntStreamex peek(IntConsumerex action) {
-        return setStream(internal.peek(wrap(action)));
+        return setStream(internal.peek(action.wrap()));
     }
 
     @Override
@@ -101,12 +99,12 @@ public class WrappedIntStream implements IntStreamex {
 
     @Override
     public void forEach(IntConsumerex action) {
-        internal.forEach(wrap(action));
+        internal.forEach(action.wrap());
     }
 
     @Override
     public void forEachOrdered(IntConsumerex action) {
-        internal.forEachOrdered(wrap(action));
+        internal.forEachOrdered(action.wrap());
     }
 
     @Override
@@ -116,19 +114,19 @@ public class WrappedIntStream implements IntStreamex {
 
     @Override
     public int reduce(int identity, IntBinaryOperatorex op) {
-        return internal.reduce(identity, wrap(op));
+        return internal.reduce(identity, op.wrap());
     }
 
     @Override
     public OptionalIntex reduce(IntBinaryOperatorex op) {
-        return OptionalIntex.ofOptional(internal.reduce(wrap(op)));
+        return OptionalIntex.ofOptional(internal.reduce(op.wrap()));
     }
 
     @Override
     public <R> R collect(Supplierex<R> supplier, ObjIntConsumerex<R> accumulator, BiConsumerex<R, R> combiner) {
-        return internal.collect(wrap(supplier),
-                wrap(accumulator),
-                wrap(combiner));
+        return internal.collect(supplier.wrap(),
+                accumulator.wrap(),
+                combiner.wrap());
     }
 
     @Override
@@ -163,17 +161,17 @@ public class WrappedIntStream implements IntStreamex {
 
     @Override
     public boolean anyMatch(IntPredicatex predicate) {
-        return internal.anyMatch(wrap(predicate));
+        return internal.anyMatch(predicate.wrap());
     }
 
     @Override
     public boolean allMatch(IntPredicatex predicate) {
-        return internal.allMatch(wrap(predicate));
+        return internal.allMatch(predicate.wrap());
     }
 
     @Override
     public boolean noneMatch(IntPredicatex predicate) {
-        return internal.noneMatch(wrap(predicate));
+        return internal.noneMatch(predicate.wrap());
     }
 
     @Override

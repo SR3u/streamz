@@ -1,6 +1,9 @@
 package sr3u.streamz.functionals.primitive.longinteger;
 
+import sr3u.streamz.common.ExceptionWrapper;
 import sr3u.streamz.functionals.Functionex;
+
+import java.util.function.ToLongFunction;
 
 /**
  * Represents a function that produces a long-valued result.  This is the
@@ -24,5 +27,9 @@ public interface ToLongFunctionex<T> {
      */
     @SuppressWarnings("RedundantThrows")
     long applyAsLong(T value) throws Exception;
+
+    default ToLongFunction<T> wrap() {
+        return ExceptionWrapper.wrap(this);
+    }
 
 }

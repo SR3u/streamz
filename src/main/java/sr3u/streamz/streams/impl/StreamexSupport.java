@@ -19,11 +19,6 @@ import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
-import static sr3u.streamz.common.ExceptionWrapper.wrap;
-import static sr3u.streamz.common.primitive.DoubleExceptionWrapper.wrap;
-import static sr3u.streamz.common.primitive.IntExceptionWrapper.wrap;
-import static sr3u.streamz.common.primitive.LongExceptionWrapper.wrap;
-
 public class StreamexSupport {
 
     public static <T> Streamex<T> streamOf(Stream<T> stream) {
@@ -36,11 +31,11 @@ public class StreamexSupport {
     }
 
     public static <T1> Streamex<T1> iterate(T1 seed, UnaryOperatorex<T1> f) {
-        return streamOf(Stream.iterate(seed, wrap(f)));
+        return streamOf(Stream.iterate(seed, f.wrap()));
     }
 
     public static <T> Streamex<T> generate(Supplierex<T> s) {
-        return streamOf(Stream.generate(wrap(s)));
+        return streamOf(Stream.generate(s.wrap()));
     }
 
     public static <T> Streamex<T> concat(Streamex<T> a, Streamex<T> b) {
@@ -52,11 +47,11 @@ public class StreamexSupport {
     }
 
     public static IntStreamex iterateInt(int seed, IntUnaryOperatorex f) {
-        return intStreamOf(IntStream.iterate(seed, wrap(f)));
+        return intStreamOf(IntStream.iterate(seed, f.wrap()));
     }
 
     public static IntStreamex generateInt(IntSupplierex s) {
-        return intStreamOf(IntStream.generate(wrap(s)));
+        return intStreamOf(IntStream.generate(s.wrap()));
     }
 
     public static IntStreamex concatInt(IntStreamex a, IntStreamex b) {
@@ -68,11 +63,11 @@ public class StreamexSupport {
     }
 
     public static LongStreamex iterateLong(long seed, LongUnaryOperatorex f) {
-        return longStreamOf(LongStream.iterate(seed, wrap(f)));
+        return longStreamOf(LongStream.iterate(seed, f.wrap()));
     }
 
     public static LongStreamex generateLong(LongSupplierex s) {
-        return longStreamOf(LongStream.generate(wrap(s)));
+        return longStreamOf(LongStream.generate(s.wrap()));
     }
 
     public static LongStreamex concatLong(LongStreamex a, LongStreamex b) {
@@ -108,11 +103,11 @@ public class StreamexSupport {
     }
 
     public static DoubleStreamex iterateDouble(double seed, DoubleUnaryOperatorex f) {
-        return doubleStreamOf(DoubleStream.iterate(seed, wrap(f)));
+        return doubleStreamOf(DoubleStream.iterate(seed, f.wrap()));
     }
 
     public static DoubleStreamex generateDouble(DoubleSupplierex s) {
-        return doubleStreamOf(DoubleStream.generate(wrap(s)));
+        return doubleStreamOf(DoubleStream.generate(s.wrap()));
     }
 
     public static DoubleStreamex concatDouble(DoubleStreamex a, DoubleStreamex b) {

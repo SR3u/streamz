@@ -1,6 +1,9 @@
 package sr3u.streamz.functionals.primitive.doublefloat;
 
+import sr3u.streamz.common.ExceptionWrapper;
 import sr3u.streamz.functionals.Functionex;
+
+import java.util.function.ToDoubleFunction;
 
 /**
  * Represents a function that produces a double-valued result.  This is the
@@ -24,5 +27,10 @@ public interface ToDoubleFunctionex<T> {
      */
     @SuppressWarnings("RedundantThrows")
     double applyAsDouble(T value) throws Exception;
+
+
+    default ToDoubleFunction<T> wrap() {
+        return ExceptionWrapper.wrap(this);
+    }
 
 }

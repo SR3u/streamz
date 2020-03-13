@@ -1,7 +1,10 @@
 package sr3u.streamz.functionals;
 
+import sr3u.streamz.common.ExceptionWrapper;
+
 import java.util.Comparator;
 import java.util.Objects;
+import java.util.function.BinaryOperator;
 
 /**
  * Represents an operation upon two operands of the same type, producing a result
@@ -48,5 +51,9 @@ interface BinaryOperatorex<T> extends BiFunctionex<T, T, T> {
     static <T> BinaryOperatorex<T> maxBy(Comparator<? super T> comparator) {
         Objects.requireNonNull(comparator);
         return (a, b) -> comparator.compare(a, b) >= 0 ? a : b;
+    }
+
+    default BinaryOperator<T> wrap() {
+        return ExceptionWrapper.wrap(this);
     }
 }

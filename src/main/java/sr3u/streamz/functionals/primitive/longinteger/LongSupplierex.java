@@ -1,7 +1,10 @@
 package sr3u.streamz.functionals.primitive.longinteger;
 
 
+import sr3u.streamz.common.primitive.LongExceptionWrapper;
 import sr3u.streamz.functionals.Supplierex;
+
+import java.util.function.LongSupplier;
 
 /**
  * Represents a supplier of {@code long}-valued results.  This is the
@@ -26,4 +29,8 @@ public interface LongSupplierex {
      */
     @SuppressWarnings("RedundantThrows")
     long getAsLong() throws Exception;
+
+    default LongSupplier wrap() {
+        return LongExceptionWrapper.wrap(this);
+    }
 }

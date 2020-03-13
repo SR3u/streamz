@@ -1,8 +1,10 @@
 package sr3u.streamz.functionals.primitive.longinteger;
 
+import sr3u.streamz.common.primitive.LongExceptionWrapper;
 import sr3u.streamz.functionals.Consumerex;
 
 import java.util.Objects;
+import java.util.function.LongConsumer;
 
 /**
  * Represents an operation that accepts a single {@code long}-valued argument and
@@ -44,5 +46,9 @@ public interface LongConsumerex {
             accept(t);
             after.accept(t);
         };
+    }
+
+    default LongConsumer wrap() {
+        return LongExceptionWrapper.wrap(this);
     }
 }

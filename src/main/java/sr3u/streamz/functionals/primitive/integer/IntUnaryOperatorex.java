@@ -1,8 +1,10 @@
 package sr3u.streamz.functionals.primitive.integer;
 
+import sr3u.streamz.common.primitive.IntExceptionWrapper;
 import sr3u.streamz.functionals.UnaryOperatorex;
 
 import java.util.Objects;
+import java.util.function.IntUnaryOperator;
 
 /**
  * Represents an operation on a single {@code int}-valued operand that produces
@@ -67,5 +69,9 @@ public interface IntUnaryOperatorex {
      */
     static IntUnaryOperatorex identity() {
         return t -> t;
+    }
+
+    default IntUnaryOperator wrap() {
+        return IntExceptionWrapper.wrap(this);
     }
 }

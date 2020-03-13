@@ -1,6 +1,9 @@
 package sr3u.streamz.functionals;
 
+import sr3u.streamz.common.ExceptionWrapper;
+
 import java.util.Objects;
+import java.util.function.Function;
 
 
 /**
@@ -71,4 +74,7 @@ public interface Functionex<T, R> {
         return t -> t;
     }
 
+    default Function<T, R> wrap() {
+        return ExceptionWrapper.wrap(this);
+    }
 }

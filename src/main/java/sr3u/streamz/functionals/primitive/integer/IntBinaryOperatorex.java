@@ -1,6 +1,9 @@
 package sr3u.streamz.functionals.primitive.integer;
 
+import sr3u.streamz.common.primitive.IntExceptionWrapper;
 import sr3u.streamz.functionals.BinaryOperatorex;
+
+import java.util.function.IntBinaryOperator;
 
 /**
  * Represents an operation upon two {@code int}-valued operands and producing an
@@ -26,4 +29,8 @@ public interface IntBinaryOperatorex {
      */
     @SuppressWarnings("RedundantThrows")
     int applyAsInt(int left, int right) throws Exception;
+
+    default IntBinaryOperator wrap() {
+        return IntExceptionWrapper.wrap(this);
+    }
 }

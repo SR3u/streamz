@@ -1,8 +1,10 @@
 package sr3u.streamz.functionals.primitive.integer;
 
+import sr3u.streamz.common.primitive.IntExceptionWrapper;
 import sr3u.streamz.functionals.Consumerex;
 
 import java.util.Objects;
+import java.util.function.IntConsumer;
 
 /**
  * Represents an operation that accepts a single {@code int}-valued argument and
@@ -44,5 +46,9 @@ public interface IntConsumerex {
             accept(t);
             after.accept(t);
         };
+    }
+
+    default IntConsumer wrap() {
+        return IntExceptionWrapper.wrap(this);
     }
 }

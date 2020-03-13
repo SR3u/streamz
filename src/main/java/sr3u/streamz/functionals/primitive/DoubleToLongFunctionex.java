@@ -1,7 +1,10 @@
 package sr3u.streamz.functionals.primitive;
 
 
+import sr3u.streamz.common.primitive.DoubleExceptionWrapper;
 import sr3u.streamz.functionals.Functionex;
+
+import java.util.function.DoubleToLongFunction;
 
 /**
  * Represents a function that accepts a double-valued argument and produces a
@@ -25,4 +28,8 @@ public interface DoubleToLongFunctionex {
      */
     @SuppressWarnings("RedundantThrows")
     long applyAsLong(double value) throws Exception;
+
+    default DoubleToLongFunction wrap() {
+        return DoubleExceptionWrapper.wrap(this);
+    }
 }

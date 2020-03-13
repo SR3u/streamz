@@ -22,8 +22,6 @@ import java.util.PrimitiveIterator;
 import java.util.Spliterator;
 import java.util.stream.LongStream;
 
-import static sr3u.streamz.common.ExceptionWrapper.wrap;
-import static sr3u.streamz.common.primitive.LongExceptionWrapper.wrap;
 import static sr3u.streamz.common.primitive.LongExceptionWrapper.wrapLongStream;
 
 public class WrappedLongStream implements LongStreamex {
@@ -47,27 +45,27 @@ public class WrappedLongStream implements LongStreamex {
 
     @Override
     public LongStreamex filter(LongPredicatex predicate) {
-        return setStream(internal.filter(wrap(predicate)));
+        return setStream(internal.filter(predicate.wrap()));
     }
 
     @Override
     public LongStreamex map(LongUnaryOperatorex mapper) {
-        return setStream(internal.map(wrap(mapper)));
+        return setStream(internal.map(mapper.wrap()));
     }
 
     @Override
     public <U> Streamex<U> mapToObj(LongFunctionex<U> mapper) {
-        return Streamex.ofStream(internal.mapToObj(wrap(mapper)));
+        return Streamex.ofStream(internal.mapToObj(mapper.wrap()));
     }
 
     @Override
     public IntStreamex mapToInt(LongToIntFunctionex mapper) {
-        return StreamexSupport.intStreamOf(internal.mapToInt(wrap(mapper)));
+        return StreamexSupport.intStreamOf(internal.mapToInt(mapper.wrap()));
     }
 
     @Override
     public DoubleStreamex mapToDouble(LongToDoubleFunctionex mapper) {
-        return StreamexSupport.doubleStreamOf(internal.mapToDouble(wrap(mapper)));
+        return StreamexSupport.doubleStreamOf(internal.mapToDouble(mapper.wrap()));
     }
 
     @Override
@@ -87,7 +85,7 @@ public class WrappedLongStream implements LongStreamex {
 
     @Override
     public LongStreamex peek(LongConsumerex action) {
-        return setStream(internal.peek(wrap(action)));
+        return setStream(internal.peek(action.wrap()));
     }
 
     @Override
@@ -102,12 +100,12 @@ public class WrappedLongStream implements LongStreamex {
 
     @Override
     public void forEach(LongConsumerex action) {
-        internal.forEach(wrap(action));
+        internal.forEach(action.wrap());
     }
 
     @Override
     public void forEachOrdered(LongConsumerex action) {
-        internal.forEachOrdered(wrap(action));
+        internal.forEachOrdered(action.wrap());
     }
 
     @Override
@@ -117,17 +115,17 @@ public class WrappedLongStream implements LongStreamex {
 
     @Override
     public long reduce(long identity, LongBinaryOperatorex op) {
-        return internal.reduce(identity, wrap(op));
+        return internal.reduce(identity, op.wrap());
     }
 
     @Override
     public OptionalLongex reduce(LongBinaryOperatorex op) {
-        return OptionalLongex.ofOptional(internal.reduce(wrap(op)));
+        return OptionalLongex.ofOptional(internal.reduce(op.wrap()));
     }
 
     @Override
     public <R> R collect(Supplierex<R> supplier, ObjLongConsumerex<R> accumulator, BiConsumerex<R, R> combiner) {
-        return internal.collect(wrap(supplier), wrap(accumulator), wrap(combiner));
+        return internal.collect(supplier.wrap(), accumulator.wrap(), combiner.wrap());
     }
 
     @Override
@@ -162,17 +160,17 @@ public class WrappedLongStream implements LongStreamex {
 
     @Override
     public boolean anyMatch(LongPredicatex predicate) {
-        return internal.anyMatch(wrap(predicate));
+        return internal.anyMatch(predicate.wrap());
     }
 
     @Override
     public boolean allMatch(LongPredicatex predicate) {
-        return internal.allMatch(wrap(predicate));
+        return internal.allMatch(predicate.wrap());
     }
 
     @Override
     public boolean noneMatch(LongPredicatex predicate) {
-        return internal.noneMatch(wrap(predicate));
+        return internal.noneMatch(predicate.wrap());
     }
 
     @Override

@@ -10,7 +10,6 @@ import sr3u.streamz.functionals.primitive.longinteger.ToLongFunctionex;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-import static sr3u.streamz.common.ExceptionWrapper.wrap;
 import static sr3u.streamz.common.ExceptionWrapper.wrapOptional;
 
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
@@ -51,20 +50,20 @@ public class Optionalex<T> {
     }
 
     public void ifPresent(Consumerex<? super T> consumer) {
-        internal.ifPresent(wrap(consumer));
+        internal.ifPresent(consumer.wrap());
     }
 
     public Optionalex<T> filter(Predicatex<? super T> predicate) {
-        return Optionalex.ofOptional(internal.filter(wrap(predicate)));
+        return Optionalex.ofOptional(internal.filter(predicate.wrap()));
     }
 
     public <U> Optionalex<U> map(Functionex<? super T, ? extends U> mapper) {
-        return Optionalex.ofOptional(internal.map(wrap(mapper)));
+        return Optionalex.ofOptional(internal.map(mapper.wrap()));
     }
 
     public OptionalIntex mapToInt(ToIntFunctionex<T> mapper) {
         if (isPresent()) {
-            int i = wrap(mapper).applyAsInt(get());
+            int i = mapper.wrap().applyAsInt(get());
             return OptionalIntex.of(i);
         } else {
             return OptionalIntex.empty();
@@ -73,7 +72,7 @@ public class Optionalex<T> {
 
     public OptionalLongex mapToLong(ToLongFunctionex<T> mapper) {
         if (isPresent()) {
-            long i = wrap(mapper).applyAsLong(get());
+            long i = mapper.wrap().applyAsLong(get());
             return OptionalLongex.of(i);
         } else {
             return OptionalLongex.empty();
@@ -82,7 +81,7 @@ public class Optionalex<T> {
 
     public OptionalDoublex mapToDouble(ToDoubleFunctionex<T> mapper) {
         if (isPresent()) {
-            double i = wrap(mapper).applyAsDouble(get());
+            double i = mapper.wrap().applyAsDouble(get());
             return OptionalDoublex.of(i);
         } else {
             return OptionalDoublex.empty();

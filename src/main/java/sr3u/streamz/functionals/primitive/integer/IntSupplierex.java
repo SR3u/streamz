@@ -1,7 +1,10 @@
 package sr3u.streamz.functionals.primitive.integer;
 
 
+import sr3u.streamz.common.primitive.IntExceptionWrapper;
 import sr3u.streamz.functionals.Supplierex;
+
+import java.util.function.IntSupplier;
 
 /**
  * Represents a supplier of {@code int}-valued results.  This is the
@@ -26,4 +29,8 @@ public interface IntSupplierex {
      */
     @SuppressWarnings("RedundantThrows")
     int getAsInt() throws Exception;
+
+    default IntSupplier wrap() {
+        return IntExceptionWrapper.wrap(this);
+    }
 }

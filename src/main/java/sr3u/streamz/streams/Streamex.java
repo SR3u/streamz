@@ -51,6 +51,10 @@ public interface Streamex<T> {
         return StreamexSupport.concat(a, b);
     }
 
+    default Streamex<T> append(Streamex<T> another) {
+        return Streamex.concat(this, another);
+    }
+
     Stream<T> stream();
 
     Streamex<T> filter(Predicatex<T> predicate);
@@ -73,7 +77,7 @@ public interface Streamex<T> {
         return mapToString(Object::toString);
     }
 
-    <R> Streamex<R> flatMap(Functionex<T, ? extends Streamex<? extends R>> mapper);
+    <R> Streamex<? extends R> flatMap(Functionex<T, ? extends Streamex<? extends R>> mapper);
 
     IntStreamex flatMapToInt(Functionex<T, ? extends IntStreamex> mapper);
 

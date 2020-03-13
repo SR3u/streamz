@@ -6,9 +6,6 @@ import sr3u.streamz.functionals.primitive.integer.IntSupplierex;
 
 import java.util.OptionalInt;
 
-import static sr3u.streamz.common.ExceptionWrapper.wrap;
-import static sr3u.streamz.common.primitive.IntExceptionWrapper.wrap;
-
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public class OptionalIntex {
     private final OptionalInt internal;
@@ -63,7 +60,7 @@ public class OptionalIntex {
     }
 
     public void ifPresent(IntConsumerex consumer) {
-        internal.ifPresent(wrap(consumer));
+        internal.ifPresent(consumer.wrap());
     }
 
     public int orElse(int other) {
@@ -71,11 +68,11 @@ public class OptionalIntex {
     }
 
     public int orElseGet(IntSupplierex other) {
-        return internal.orElseGet(wrap(other));
+        return internal.orElseGet(other.wrap());
     }
 
     public <X extends Throwable> int orElseThrow(Supplierex<X> exceptionSupplier) throws X {
-        return internal.orElseThrow(wrap(exceptionSupplier));
+        return internal.orElseThrow(exceptionSupplier.wrap());
     }
 
     public int orElseThrow() {

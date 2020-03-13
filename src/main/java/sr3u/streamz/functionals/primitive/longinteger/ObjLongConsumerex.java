@@ -1,6 +1,9 @@
 package sr3u.streamz.functionals.primitive.longinteger;
 
+import sr3u.streamz.common.primitive.LongExceptionWrapper;
 import sr3u.streamz.functionals.BiConsumerex;
+
+import java.util.function.ObjLongConsumer;
 
 /**
  * Represents an operation that accepts an object-valued and a
@@ -27,4 +30,8 @@ public interface ObjLongConsumerex<T> {
      */
     @SuppressWarnings("RedundantThrows")
     void accept(T t, long value) throws Exception;
+
+    default ObjLongConsumer<T> wrap() {
+        return LongExceptionWrapper.wrap(this);
+    }
 }

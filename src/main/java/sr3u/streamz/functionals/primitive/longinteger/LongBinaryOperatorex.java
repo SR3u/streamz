@@ -1,6 +1,9 @@
 package sr3u.streamz.functionals.primitive.longinteger;
 
+import sr3u.streamz.common.primitive.LongExceptionWrapper;
 import sr3u.streamz.functionals.BinaryOperatorex;
+
+import java.util.function.LongBinaryOperator;
 
 /**
  * Represents an operation upon two {@code long}-valued operands and producing an
@@ -26,4 +29,8 @@ public interface LongBinaryOperatorex {
      */
     @SuppressWarnings("RedundantThrows")
     long applyAsLong(long left, long right) throws Exception;
+
+    default LongBinaryOperator wrap() {
+        return LongExceptionWrapper.wrap(this);
+    }
 }

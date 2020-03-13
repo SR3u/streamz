@@ -1,6 +1,9 @@
 package sr3u.streamz.functionals.primitive.doublefloat;
 
+import sr3u.streamz.common.primitive.DoubleExceptionWrapper;
 import sr3u.streamz.functionals.Functionex;
+
+import java.util.function.DoubleFunction;
 
 /**
  * Represents a function that accepts an double-valued argument and produces a
@@ -25,4 +28,8 @@ public interface DoubleFunctionex<R> {
      */
     @SuppressWarnings("RedundantThrows")
     R apply(double value) throws Exception;
+
+    default DoubleFunction<R> wrap() {
+        return DoubleExceptionWrapper.wrap(this);
+    }
 }

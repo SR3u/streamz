@@ -1,8 +1,10 @@
 package sr3u.streamz.functionals.primitive.doublefloat;
 
+import sr3u.streamz.common.primitive.DoubleExceptionWrapper;
 import sr3u.streamz.functionals.UnaryOperatorex;
 
 import java.util.Objects;
+import java.util.function.DoubleUnaryOperator;
 
 /**
  * Represents an operation on a single {@code double}-valued operand that produces
@@ -67,5 +69,9 @@ public interface DoubleUnaryOperatorex {
      */
     static DoubleUnaryOperatorex identity() {
         return t -> t;
+    }
+
+    default DoubleUnaryOperator wrap() {
+        return DoubleExceptionWrapper.wrap(this);
     }
 }

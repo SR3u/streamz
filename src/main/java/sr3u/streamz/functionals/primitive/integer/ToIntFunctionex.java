@@ -1,6 +1,9 @@
 package sr3u.streamz.functionals.primitive.integer;
 
+import sr3u.streamz.common.ExceptionWrapper;
 import sr3u.streamz.functionals.Functionex;
+
+import java.util.function.ToIntFunction;
 
 /**
  * Represents a function that produces an int-valued result.  This is the
@@ -25,4 +28,7 @@ public interface ToIntFunctionex<T> {
     @SuppressWarnings("RedundantThrows")
     int applyAsInt(T value) throws Exception;
 
+    default ToIntFunction<T> wrap() {
+        return ExceptionWrapper.wrap(this);
+    }
 }

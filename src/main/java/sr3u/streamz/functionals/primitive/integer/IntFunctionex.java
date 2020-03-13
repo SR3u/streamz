@@ -1,6 +1,9 @@
 package sr3u.streamz.functionals.primitive.integer;
 
+import sr3u.streamz.common.primitive.IntExceptionWrapper;
 import sr3u.streamz.functionals.Functionex;
+
+import java.util.function.IntFunction;
 
 /**
  * Represents a function that accepts an int-valued argument and produces a
@@ -25,4 +28,8 @@ public interface IntFunctionex<R> {
      */
     @SuppressWarnings("RedundantThrows")
     R apply(int value) throws Exception;
+
+    default IntFunction<R> wrap() {
+        return IntExceptionWrapper.wrap(this);
+    }
 }

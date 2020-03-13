@@ -1,6 +1,9 @@
 package sr3u.streamz.functionals.primitive;
 
+import sr3u.streamz.common.primitive.IntExceptionWrapper;
 import sr3u.streamz.functionals.Functionex;
+
+import java.util.function.IntToDoubleFunction;
 
 /**
  * Represents a function that accepts an int-valued argument and produces a
@@ -24,4 +27,8 @@ public interface IntToDoubleFunctionex {
      */
     @SuppressWarnings("RedundantThrows")
     double applyAsDouble(int value) throws Exception;
+
+    default IntToDoubleFunction wrap() {
+        return IntExceptionWrapper.wrap(this);
+    }
 }

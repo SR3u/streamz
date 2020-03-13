@@ -1,6 +1,9 @@
 package sr3u.streamz.functionals.primitive.doublefloat;
 
+import sr3u.streamz.common.primitive.DoubleExceptionWrapper;
 import sr3u.streamz.functionals.BiConsumerex;
+
+import java.util.function.ObjDoubleConsumer;
 
 /**
  * Represents an operation that accepts an object-valued and a
@@ -27,4 +30,8 @@ public interface ObjDoubleConsumerex<T> {
      */
     @SuppressWarnings("RedundantThrows")
     void accept(T t, double value) throws Exception;
+
+    default ObjDoubleConsumer<T> wrap() {
+        return DoubleExceptionWrapper.wrap(this);
+    }
 }

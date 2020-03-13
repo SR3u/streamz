@@ -1,6 +1,9 @@
 package sr3u.streamz.functionals.primitive.integer;
 
+import sr3u.streamz.common.primitive.IntExceptionWrapper;
 import sr3u.streamz.functionals.BiConsumerex;
+
+import java.util.function.ObjIntConsumer;
 
 /**
  * Represents an operation that accepts an object-valued and a
@@ -27,4 +30,8 @@ public interface ObjIntConsumerex<T> {
      */
     @SuppressWarnings("RedundantThrows")
     void accept(T t, int value) throws Exception;
+
+    default ObjIntConsumer<T> wrap() {
+        return IntExceptionWrapper.wrap(this);
+    }
 }
