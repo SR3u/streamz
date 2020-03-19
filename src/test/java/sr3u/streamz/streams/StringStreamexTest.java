@@ -2,6 +2,8 @@ package sr3u.streamz.streams;
 
 import org.junit.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.List;
 
@@ -25,6 +27,26 @@ public class StringStreamexTest {
                 .joined(",", "prefix", "suffix"));
 
     }
+
+    @Test
+    public void printEach() {
+        ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+        LongStreamex.of(1, 2, 3)
+                .asStringStream()
+                .printEach(new PrintStream(outStream));
+        assertEquals("123", outStream.toString());
+    }
+
+    @Test
+    public void printlnEach() {
+        ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+        LongStreamex.of(1, 2, 3)
+                .asStringStream()
+                .printlnEach(new PrintStream(outStream));
+        String ls = System.lineSeparator();
+        assertEquals("1" + ls + "2" + ls + "3" + ls, outStream.toString());
+    }
+
 
     @Test
     public void streamConversions() {
