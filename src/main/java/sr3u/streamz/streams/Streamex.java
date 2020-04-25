@@ -15,6 +15,7 @@ import sr3u.streamz.functionals.primitive.longinteger.ToLongFunctionex;
 import sr3u.streamz.optionals.Optionalex;
 import sr3u.streamz.streams.impl.StreamexSupport;
 
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Spliterator;
@@ -32,6 +33,10 @@ public interface Streamex<T> {
 
     static <T1> Streamex<T1> ofStream(Stream<T1> stream) {
         return StreamexSupport.streamOf(stream);
+    }
+
+    static <T1> Streamex<T1> ofCollection(Collection<T1> collection) {
+        return ofStream(collection.stream());
     }
 
     @SafeVarargs

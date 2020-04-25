@@ -15,10 +15,13 @@ import sr3u.streamz.optionals.OptionalDoublex;
 import sr3u.streamz.optionals.OptionalLongex;
 import sr3u.streamz.streams.impl.StreamexSupport;
 
+import java.util.Collection;
 import java.util.LongSummaryStatistics;
 import java.util.PrimitiveIterator;
 import java.util.Spliterator;
+import java.util.stream.DoubleStream;
 import java.util.stream.LongStream;
+import java.util.stream.Stream;
 
 public interface LongStreamex {
 
@@ -32,6 +35,26 @@ public interface LongStreamex {
 
     static LongStreamex of(long... values) {
         return StreamexSupport.ofLong(values);
+    }
+
+    static LongStreamex ofCollection(Collection<Long> collection) {
+        return ofStream(collection.stream());
+    }
+
+    static LongStreamex ofStream(Stream<Long> stream) {
+        return ofStream(stream.mapToLong(i->i));
+    }
+
+    static LongStreamex ofStream(Streamex<Long> stream) {
+        return ofStream(stream.mapToLong(i->i));
+    }
+
+    static LongStreamex ofStream(LongStreamex stream) {
+        return of(stream.toArray());
+    }
+
+    static LongStreamex ofStream(LongStream stream) {
+        return of(stream.toArray());
     }
 
     static LongStreamex iterate(long seed, LongUnaryOperatorex f) {

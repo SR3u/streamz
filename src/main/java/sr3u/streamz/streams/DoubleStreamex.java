@@ -14,10 +14,13 @@ import sr3u.streamz.functionals.primitive.doublefloat.ObjDoubleConsumerex;
 import sr3u.streamz.optionals.OptionalDoublex;
 import sr3u.streamz.streams.impl.StreamexSupport;
 
+import java.util.Collection;
 import java.util.DoubleSummaryStatistics;
 import java.util.PrimitiveIterator;
 import java.util.Spliterator;
 import java.util.stream.DoubleStream;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public interface DoubleStreamex {
 
@@ -31,6 +34,26 @@ public interface DoubleStreamex {
 
     static DoubleStreamex of(double... values) {
         return StreamexSupport.ofDouble(values);
+    }
+
+    static DoubleStreamex ofCollection(Collection<Double> collection) {
+        return ofStream(collection.stream());
+    }
+
+    static DoubleStreamex ofStream(Stream<Double> stream) {
+        return ofStream(stream.mapToDouble(i->i));
+    }
+
+    static DoubleStreamex ofStream(Streamex<Double> stream) {
+        return ofStream(stream.mapToDouble(i->i));
+    }
+
+    static DoubleStreamex ofStream(DoubleStreamex stream) {
+        return of(stream.toArray());
+    }
+
+    static DoubleStreamex ofStream(DoubleStream stream) {
+        return of(stream.toArray());
     }
 
     static DoubleStreamex iterate(double seed, DoubleUnaryOperatorex f) {

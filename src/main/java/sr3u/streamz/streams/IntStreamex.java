@@ -15,10 +15,12 @@ import sr3u.streamz.optionals.OptionalDoublex;
 import sr3u.streamz.optionals.OptionalIntex;
 import sr3u.streamz.streams.impl.StreamexSupport;
 
+import java.util.Collection;
 import java.util.IntSummaryStatistics;
 import java.util.PrimitiveIterator;
 import java.util.Spliterator;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public interface IntStreamex {
 
@@ -32,6 +34,26 @@ public interface IntStreamex {
 
     static IntStreamex of(int... values) {
         return StreamexSupport.ofInt(values);
+    }
+
+    static IntStreamex ofCollection(Collection<Integer> collection) {
+        return ofStream(collection.stream());
+    }
+
+    static IntStreamex ofStream(Stream<Integer> stream) {
+        return ofStream(stream.mapToInt(i->i));
+    }
+
+    static IntStreamex ofStream(Streamex<Integer> stream) {
+        return ofStream(stream.mapToInt(i->i));
+    }
+
+    static IntStreamex ofStream(IntStreamex stream) {
+        return of(stream.toArray());
+    }
+
+    static IntStreamex ofStream(IntStream stream) {
+        return of(stream.toArray());
     }
 
     static IntStreamex iterate(int seed, IntUnaryOperatorex f) {

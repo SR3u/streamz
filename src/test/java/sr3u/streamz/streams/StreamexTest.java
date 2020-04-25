@@ -4,6 +4,7 @@ import org.junit.Test;
 import sr3u.streamz.optionals.Optionalex;
 import sr3u.streamz.test.Item;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -218,7 +219,7 @@ public class StreamexTest {
 
     @Test
     public void flatMapToDouble() {
-        List<Double> source = Streamex.of(1.1, 2, 3.2, 4, 5, 6)
+        List<Double> source = Streamex.ofCollection(Arrays.asList(1.1, 2, 3.2, 4, 5, 6))
                 .mapToDouble(Number::doubleValue)
                 .boxed()
                 .collect(Collectors.toList());
