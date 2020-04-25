@@ -3,6 +3,7 @@ package sr3u.streamz.optionals;
 import sr3u.streamz.functionals.Consumerex;
 import sr3u.streamz.functionals.Functionex;
 import sr3u.streamz.functionals.Predicatex;
+import sr3u.streamz.functionals.Supplierex;
 import sr3u.streamz.functionals.primitive.doublefloat.ToDoubleFunctionex;
 import sr3u.streamz.functionals.primitive.integer.ToIntFunctionex;
 import sr3u.streamz.functionals.primitive.longinteger.ToLongFunctionex;
@@ -96,8 +97,8 @@ public class Optionalex<T> {
         return internal.orElse(other);
     }
 
-    public T orElseGet(Supplier<? extends T> other) {
-        return internal.orElseGet(other);
+    public T orElseGet(Supplierex<? extends T> other) {
+        return internal.orElseGet(other.wrap());
     }
 
     public <X extends Throwable> T orElseThrow(Supplier<? extends X> exceptionSupplier) throws X {

@@ -21,7 +21,7 @@ Java 8 Streams and Optionals but with checked Exceptions
 <dependency>
   <groupId>com.github.SR3u</groupId>
   <artifactId>streamz</artifactId>
-  <version>v1.8.0.1-e</version>
+  <version>v1.8.0.1-f</version>
 </dependency>
 ```
 #### Others
