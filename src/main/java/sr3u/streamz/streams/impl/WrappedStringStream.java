@@ -1,14 +1,23 @@
 package sr3u.streamz.streams.impl;
 
-import sr3u.streamz.functionals.*;
+import sr3u.streamz.functionals.BiConsumerex;
+import sr3u.streamz.functionals.BiFunctionex;
+import sr3u.streamz.functionals.BinaryOperatorex;
+import sr3u.streamz.functionals.Consumerex;
+import sr3u.streamz.functionals.Functionex;
+import sr3u.streamz.functionals.Predicatex;
+import sr3u.streamz.functionals.Supplierex;
 import sr3u.streamz.functionals.primitive.doublefloat.ToDoubleFunctionex;
 import sr3u.streamz.functionals.primitive.integer.IntFunctionex;
 import sr3u.streamz.functionals.primitive.integer.ToIntFunctionex;
 import sr3u.streamz.functionals.primitive.longinteger.ToLongFunctionex;
 import sr3u.streamz.optionals.Optionalex;
-import sr3u.streamz.streams.*;
+import sr3u.streamz.streams.DoubleStreamex;
+import sr3u.streamz.streams.IntStreamex;
+import sr3u.streamz.streams.LongStreamex;
+import sr3u.streamz.streams.Streamex;
+import sr3u.streamz.streams.StringStreamex;
 
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Spliterator;

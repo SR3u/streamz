@@ -2,7 +2,6 @@ package sr3u.streamz.streams;
 
 import org.junit.Test;
 import sr3u.streamz.optionals.Optionalex;
-import sr3u.streamz.test.Item;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -11,8 +10,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class StringStreamexTest {
 

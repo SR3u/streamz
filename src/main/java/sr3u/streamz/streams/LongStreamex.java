@@ -19,7 +19,6 @@ import java.util.Collection;
 import java.util.LongSummaryStatistics;
 import java.util.PrimitiveIterator;
 import java.util.Spliterator;
-import java.util.stream.DoubleStream;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
@@ -42,11 +41,11 @@ public interface LongStreamex {
     }
 
     static LongStreamex ofStream(Stream<Long> stream) {
-        return ofStream(stream.mapToLong(i->i));
+        return ofStream(stream.mapToLong(i -> i));
     }
 
     static LongStreamex ofStream(Streamex<Long> stream) {
-        return ofStream(stream.mapToLong(i->i));
+        return ofStream(stream.mapToLong(i -> i));
     }
 
     static LongStreamex ofStream(LongStreamex stream) {

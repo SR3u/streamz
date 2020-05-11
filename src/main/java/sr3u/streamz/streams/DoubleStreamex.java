@@ -19,7 +19,6 @@ import java.util.DoubleSummaryStatistics;
 import java.util.PrimitiveIterator;
 import java.util.Spliterator;
 import java.util.stream.DoubleStream;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public interface DoubleStreamex {
@@ -41,11 +40,11 @@ public interface DoubleStreamex {
     }
 
     static DoubleStreamex ofStream(Stream<Double> stream) {
-        return ofStream(stream.mapToDouble(i->i));
+        return ofStream(stream.mapToDouble(i -> i));
     }
 
     static DoubleStreamex ofStream(Streamex<Double> stream) {
-        return ofStream(stream.mapToDouble(i->i));
+        return ofStream(stream.mapToDouble(i -> i));
     }
 
     static DoubleStreamex ofStream(DoubleStreamex stream) {
@@ -146,7 +145,11 @@ public interface DoubleStreamex {
 
     PrimitiveIterator.OfDouble iterator();
 
-    Spliterator.OfDouble spliterator()    /*public static Builder builder() {//TODO        return DoubleStream.builder();    }*/;
+    Spliterator.OfDouble spliterator();
+
+    /*public static Builder builder() {
+            //TODO        return DoubleStream.builder();    }
+       */
 
     boolean isParallel();
 

@@ -1,6 +1,13 @@
 package sr3u.streamz.streams;
 
-import sr3u.streamz.functionals.*;
+import sr3u.streamz.functionals.BiConsumerex;
+import sr3u.streamz.functionals.BiFunctionex;
+import sr3u.streamz.functionals.BinaryOperatorex;
+import sr3u.streamz.functionals.Consumerex;
+import sr3u.streamz.functionals.Functionex;
+import sr3u.streamz.functionals.Predicatex;
+import sr3u.streamz.functionals.Supplierex;
+import sr3u.streamz.functionals.UnaryOperatorex;
 import sr3u.streamz.functionals.primitive.doublefloat.ToDoubleFunctionex;
 import sr3u.streamz.functionals.primitive.integer.IntFunctionex;
 import sr3u.streamz.functionals.primitive.integer.ToIntFunctionex;
@@ -94,7 +101,7 @@ public interface StringStreamex {
     StringStreamex mapToString(Functionex<String, String> mapper);
 
     default Streamex<Object> mapToObject() {
-        return map(s->s);
+        return map(s -> s);
     }
 
     <R> Streamex<? extends R> flatMap(Functionex<String, ? extends Streamex<? extends R>> mapper);

@@ -53,6 +53,7 @@ interface BinaryOperatorex<T> extends BiFunctionex<T, T, T> {
         return (a, b) -> comparator.compare(a, b) >= 0 ? a : b;
     }
 
+    @Override
     default BinaryOperator<T> wrap() {
         return ExceptionWrapper.wrap(this);
     }

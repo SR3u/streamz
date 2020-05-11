@@ -41,11 +41,11 @@ public interface IntStreamex {
     }
 
     static IntStreamex ofStream(Stream<Integer> stream) {
-        return ofStream(stream.mapToInt(i->i));
+        return ofStream(stream.mapToInt(i -> i));
     }
 
     static IntStreamex ofStream(Streamex<Integer> stream) {
-        return ofStream(stream.mapToInt(i->i));
+        return ofStream(stream.mapToInt(i -> i));
     }
 
     static IntStreamex ofStream(IntStreamex stream) {
