@@ -119,6 +119,20 @@ public class StringStreamexTest {
     }
 
     @Test
+    public void regexp() {
+        String actual = createStream()
+                .filter("[0-9]")
+                .collect(Collectors.joining(", "));
+        assertEquals(EXPECTED_ALL_ORDERED, actual);
+        assertTrue(createStream()
+                .allMatch("[0-9]"));
+        assertTrue(createStream()
+                .anyMatch("[1,2]"));
+        assertTrue(createStream()
+                .noneMatch("[0-9][0-9]"));
+    }
+
+    @Test
     public void distinctByKey() {
         String actual = StringStreamex.concat(createStream(), createStream())
                 .distinct()
