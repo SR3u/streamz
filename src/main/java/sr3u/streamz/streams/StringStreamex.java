@@ -20,6 +20,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Spliterator;
+import java.util.regex.Pattern;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -46,6 +47,66 @@ public interface StringStreamex {
 
     default void printlnEach(PrintStream printStream) {
         forEach(printStream::println);
+    }
+
+    //
+    // Regexp stuff
+    //
+
+    default StringStreamex filter(String regexp) {
+        Pattern pattern = Pattern.compile(regexp);
+        return filter(pattern);
+    }
+
+    default StringStreamex filter(String regexp, int flags) {
+        Pattern pattern = Pattern.compile(regexp, flags);
+        return filter(pattern);
+    }
+
+    default StringStreamex filter(final Pattern regexp) {
+        return filter(s -> regexp.matcher(s).matches());
+    }
+
+    default boolean allMatch(String regexp) {
+        Pattern pattern = Pattern.compile(regexp);
+        return allMatch(pattern);
+    }
+
+    default boolean allMatch(String regexp, int flags) {
+        Pattern pattern = Pattern.compile(regexp, flags);
+        return allMatch(pattern);
+    }
+
+    default boolean allMatch(final Pattern regexp) {
+        return allMatch(s -> regexp.matcher(s).matches());
+    }
+
+    default boolean anyMatch(String regexp) {
+        Pattern pattern = Pattern.compile(regexp);
+        return anyMatch(pattern);
+    }
+
+    default boolean anyMatch(String regexp, int flags) {
+        Pattern pattern = Pattern.compile(regexp, flags);
+        return anyMatch(pattern);
+    }
+
+    default boolean anyMatch(final Pattern regexp) {
+        return anyMatch(s -> regexp.matcher(s).matches());
+    }
+
+    default boolean noneMatch(String regexp) {
+        Pattern pattern = Pattern.compile(regexp);
+        return noneMatch(pattern);
+    }
+
+    default boolean noneMatch(String regexp, int flags) {
+        Pattern pattern = Pattern.compile(regexp, flags);
+        return noneMatch(pattern);
+    }
+
+    default boolean noneMatch(final Pattern regexp) {
+        return noneMatch(s -> regexp.matcher(s).matches());
     }
 
     //
