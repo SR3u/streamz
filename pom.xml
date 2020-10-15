@@ -6,7 +6,7 @@
 
     <groupId>sr3u</groupId>
     <artifactId>streamz</artifactId>
-    <version>v1.8.0.2-a</version>
+    <version>v1.8.0.2-b</version>
     <build>
         <plugins>
             <plugin>
